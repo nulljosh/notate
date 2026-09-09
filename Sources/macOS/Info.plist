@@ -2,32 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
-    <key>CFBundleName</key>
-    <string>Voxprint</string>
-    <key>CFBundleDisplayName</key>
-    <string>Voxprint</string>
-    <key>CFBundleIdentifier</key>
-    <string>com.nulljosh.echo</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>LSApplicationCategoryType</key>
-    <string>public.app-category.productivity</string>
-    <key>CFBundleVersion</key>
-    <string>$(CURRENT_PROJECT_VERSION)</string>
-    <key>CFBundleShortVersionString</key>
-    <string>$(MARKETING_VERSION)</string>
-    <key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Voxprint transcribes speech locally on your device using Whisper AI. Your audio never leaves your device.</string>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsLocalNetworking</key>
-        <true/>
-    </dict>
-    <key>LSMinimumSystemVersion</key>
-    <string>14.0</string>
+	<key>CFBundleDisplayName</key>
+	<string>Voxprint</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.nulljosh.echo</string>
+	<key>CFBundleName</key>
+	<string>Voxprint</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Voxprint transcribes speech locally on your device using Whisper AI. Your audio never leaves your device.</string>
 </dict>
 </plist>
