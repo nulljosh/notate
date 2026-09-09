@@ -28,3 +28,4 @@ It handles more than voice. Drop in a podcast, a lecture, or a song and it write
 Live microphone transcription is free with no limits. The one paid thing is Voxprint Pro, a single one dollar purchase that unlocks unlimited audio file transcription and the Small model, the most accurate one. You buy it once. I'd rather sell a tool than rent one.
 
 The web app and the whole codebase are open. Happy to answer anything about the on-device pipeline.
+Post: https://www.producthunt.com/products/voxprint?launch=voxprint

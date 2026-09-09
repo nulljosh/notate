@@ -2,7 +2,7 @@
 
 # Voxprint
 
-![Version](https://img.shields.io/badge/version-1.3.3-blue) ![Platform](https://img.shields.io/badge/platform-iOS%2017%20%7C%20macOS%2014-lightgrey) ![License](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fvoxprint-black?logo=github)](https://github.com/nulljosh/voxprint)
+![Version](https://img.shields.io/badge/version-1.3.3-blue) ![Platform](https://img.shields.io/badge/platform-iOS%2017%20%7C%20macOS%2014-lightgrey) ![License](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fvoxprint-black?logo=github)](https://github.com/nulljosh/voxprint) [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-voxprint-da552f?logo=producthunt&logoColor=white)](https://www.producthunt.com/products/voxprint?launch=voxprint)
 
 Speech to text that never leaves your device.
 
