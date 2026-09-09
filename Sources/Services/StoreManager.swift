@@ -14,9 +14,8 @@ final class StoreManager: ObservableObject {
     static let freeFileLimit = 3
     private static let usedCountKey = "echo.fileTranscriptionsUsed"
 
-    // ponytail: no Paid Apps Agreement/bank account on the dev account yet, so IAP
-    // can't function in review at all — ship v1 fully unlocked, re-enable for v2.
-    @Published private(set) var isPro = true
+    // Paid Apps Agreement signed 2026-09-09 — real entitlement check restored below.
+    @Published private(set) var isPro = false
     @Published private(set) var product: Product?
     @Published private(set) var purchasing = false
     @Published var showPaywall = false
@@ -95,9 +94,13 @@ final class StoreManager: ObservableObject {
     // MARK: - Entitlement
 
     private func refreshEntitlement() async {
-        // ponytail: no-op while isPro is hardcoded true above; restore this body
-        // (removing the early return) when IAP is re-enabled for v2.
-        return
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let transaction) = result, transaction.productID == Self.productID {
+                isPro = true
+                return
+            }
+        }
+        isPro = false
     }
 
     private func listenForTransactions() -> Task<Void, Never> {

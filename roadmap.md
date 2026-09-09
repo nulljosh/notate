@@ -1,6 +1,35 @@
 # Voxprint (formerly Echo Transcription) Roadmap
 
-## BLOCKED, IAP is built but switched off (Paid Apps Agreement)
+## READY TO SHIP: v1.3.9, real $1 paywall, needs a build from the signing Mac
+
+Paid Apps Agreement/bank enrollment is DONE (signed 2026-09-09) — the blocker described below
+this section is resolved. Since then:
+- **Code fixed** (2026-09-09): `Sources/Services/StoreManager.swift` no longer hardcodes
+  `isPro = true`. `refreshEntitlement()` does a real `Transaction.currentEntitlements` check
+  against `com.nulljosh.echo.unlock`. Verified via `xcodebuild build -scheme Voxprint-macOS`
+  (BUILD SUCCEEDED, unsigned).
+- **Price dropped from $7.99 to $1.00 one-time**, matching the account-wide "$1, no subscription"
+  strategy (see [[epiphany]] for the same move there). Set live in ASC via `asc iap pricing
+  schedules create --iap-id 6787371864 --base-territory USA --price 1.00`, confirmed via
+  `asc iap pricing summary --app 6782604262` → `"currentPrice":{"amount":"1.0"}`. `Voxprint.storekit`
+  local test config updated to match.
+- **`asc` CLI installed** this session (`brew install asc`) + authenticated with a fresh API key
+  (`asc-cli-2`), so ASC-side scripting works from any machine now, not just wherever the old key's
+  `.p8` lived.
+
+**What's left, needs to run on the Mac with the real signing certs** (attempted from a headless
+background session 2026-09-09, `security find-identity -v -p codesigning` returned 0 identities —
+keychain wasn't unlocked/accessible there):
+1. `project.yml`: bump `MARKETING_VERSION` 1.3.7 → 1.3.9 (1.3.8 is a *different*, already-approved
+   build sitting in **Pending Developer Release** in ASC — do NOT release it, it predates this fix
+   and still ships fully-unlocked/free).
+2. `xcodegen generate`
+3. `asc workflow run ship-ios VERSION:1.3.9` (or manual archive/export/upload/submit, see the
+   v1.3.5 ship log below for the pattern)
+4. This will switch existing installed users from "everything free" to "3 free file transcriptions
+   + $1 unlock" — expected, not a bug, but worth knowing before hitting submit.
+
+## Superseded: old Paid-Apps-Agreement-blocked note (resolved 2026-09-09, kept for history)
 
 Everything for Voxprint Pro already exists and is correct:
 `Echo.storekit` defines `com.nulljosh.echo.unlock` as a **$7.99 non-consumable** (pricing
@@ -8,7 +37,7 @@ re-confirmed 2026-08-19, keep it; "own it once, nothing leaves your device" is t
 subscription would contradict the product), `PaywallView.swift` renders, `canTranscribeFile()`
 enforces the 3-free-file gate, and `listenForTransactions()` is wired.
 
-It is deliberately disabled in two places in `Sources/Services/StoreManager.swift`, both marked
+It was deliberately disabled in two places in `Sources/Services/StoreManager.swift`, both marked
 with `ponytail:` comments explaining why:
 - line ~19: `@Published private(set) var isPro = true`, hardcoded open
 - `refreshEntitlement()`: stubbed to an early `return`
@@ -18,9 +47,8 @@ revenue across every app. Apple's exact rejection reason is unknown (check ASC w
 → Agreements); CRA business number involvement is uncertain but requires investigation. Phone queue
 to CRA has been unresolved for weeks. Tracked in the wiki's `blocked-on-joshua.md` §3.
 
-Once the account is enrolled: revert those two lines, rebuild, ship as v2. No other work required.
-Stripe is irrelevant here, Voxprint has no server and no accounts, and Apple requires IAP for
-unlocking in-app features regardless.
+~~Once the account is enrolled: revert those two lines, rebuild, ship as v2.~~ Done above; price is
+$1 not the $7.99 this note originally assumed.
 
 ## 2026-08-18, Echo Pro branding: IAP fixed, screenshots BLOCKED on toolchain
 
