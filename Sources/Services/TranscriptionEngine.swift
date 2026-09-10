@@ -146,6 +146,7 @@ class TranscriptionEngine: ObservableObject {
             let download = Task.detached {
                 try await WhisperKit.download(
                     variant: model,
+                    useBackgroundSession: true, // ponytail: survives app suspend, avoids restart-from-0 that made "way too long" downloads
                     progressCallback: { [weak self] progress in
                         let fraction = progress.fractionCompleted
                         lastProgress.update(fraction)

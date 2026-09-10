@@ -81,13 +81,21 @@ struct TranscriptionView: View {
                     }
                 } else {
                     ScrollView(showsIndicators: false) {
-                        Text(text)
+                        // ponytail: split off the trailing word so only it animates in while recording; static text otherwise
+                        let words = text.split(separator: " ", omittingEmptySubsequences: true)
+                        let lastWord = isRecording ? words.last.map(String.init) ?? "" : ""
+                        let leading = isRecording && !lastWord.isEmpty ? words.dropLast().joined(separator: " ") : text
+
+                        (Text(leading) + Text(leading.isEmpty || lastWord.isEmpty ? "" : " ") + Text(lastWord))
                             .font(.system(size: 18, weight: .regular))
                             .foregroundStyle(.primary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(20)
                             .padding(.top, 28)
                             .textSelection(.enabled)
+                            .animation(.spring(response: 0.25, dampingFraction: 0.6), value: lastWord)
+                            .id(lastWord.isEmpty ? "static" : "live")
+                            .transition(.opacity.combined(with: .scale(scale: 0.9, anchor: .leading)))
                     }
                     .scrollBounceBehavior(.basedOnSize)
                     .overlay(alignment: .topTrailing) {
