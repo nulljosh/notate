@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>document.documentElement.classList.add('js')</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voxprint: On-Device Transcription</title>
@@ -31,6 +32,10 @@
 .demo .device-mac .device-screen iframe,.demo .device-windows .device-screen iframe{width:1024px;height:640px}
 .demo-caption{font-size:.9rem;opacity:.65;margin:1rem 0 0}
 .embed .demo,.embed footer,.embed nav{display:none!important}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  html.js .reveal.in-view { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
@@ -202,6 +207,27 @@ function fit(){i.style.transform='scale('+(i.parentNode.clientWidth/i.offsetWidt
       col.appendChild(card);
     });
     wall.appendChild(col);
+  }
+})();
+</script>
+<script>
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  document.querySelectorAll('.landing-features, .closing, #install-anywhere').forEach(function(el){ el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  var wall = document.getElementById('heroWall');
+  if (wall && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    var ticking = false;
+    addEventListener('scroll', function(){
+      if (!ticking) {
+        requestAnimationFrame(function(){ wall.style.transform = 'translateY(' + (scrollY * 0.15) + 'px)'; ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
   }
 })();
 </script>
