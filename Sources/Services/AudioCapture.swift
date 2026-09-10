@@ -56,6 +56,9 @@ class AudioCapture {
         guard frameCapacity > 0,
               let outBuffer = AVAudioPCMBuffer(pcmFormat: targetFormat, frameCapacity: frameCapacity) else { return }
 
+        // AVAudioConverter pulls input via this callback rather than taking a buffer directly.
+        // We only have the one tap buffer to offer, so hand it over once and tell the converter
+        // there's nothing more this round on every call after.
         var inputConsumed = false
         let status = converter.convert(to: outBuffer, error: nil) { _, outStatus in
             if inputConsumed {
@@ -73,6 +76,8 @@ class AudioCapture {
 
         let samples = Array(UnsafeBufferPointer(start: channelData[0], count: Int(outBuffer.frameLength)))
 
+        // RMS of typical speech sits well under 1.0, so scale it up (tuned by ear) before
+        // clamping so the waveform view actually swings across its full range.
         let rms = sqrt(samples.map { $0 * $0 }.reduce(0, +) / Float(samples.count))
         onLevel?(min(rms * 15, 1.0))
         onSamples?(samples)
