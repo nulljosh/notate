@@ -32,6 +32,8 @@
 .demo .device-mac .device-screen iframe,.demo .device-windows .device-screen iframe{width:1024px;height:640px}
 .demo-caption{font-size:.9rem;opacity:.65;margin:1rem 0 0}
 .embed .demo,.embed footer,.embed nav{display:none!important}
+.site-logo{position:absolute;top:1.5rem;left:1.5rem;z-index:3;display:flex;align-items:center;gap:.5rem;font-weight:600;color:inherit;text-decoration:none}
+.site-logo svg{display:block}
 @media (prefers-reduced-motion: no-preference) {
   html.js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
   html.js .reveal.in-view { opacity: 1; transform: translateY(0); }
@@ -46,6 +48,10 @@
     <section class="landing-hero">
         <div class="hero-wall" id="heroWall" aria-hidden="true"></div>
         <div class="hero-scrim" aria-hidden="true"></div>
+        <a class="site-logo" href="/">
+            <svg viewBox="0 0 200 200" width="24" height="24"><rect width="200" height="200" rx="44" fill="#0074D9"/><circle cx="100" cy="85" r="19" fill="#ffffff"/><circle cx="100" cy="123" r="15" fill="#ffffff"/><rect x="30" y="97" width="9" height="18" rx="4.5" fill="#9a9a9a"/><rect x="45" y="79" width="9" height="42" rx="4.5" fill="#d8d8d8"/><rect x="60" y="63" width="9" height="60" rx="4.5" fill="#e8e8e8"/><rect x="131" y="63" width="9" height="60" rx="4.5" fill="#e8e8e8"/><rect x="146" y="79" width="9" height="42" rx="4.5" fill="#d8d8d8"/><rect x="161" y="97" width="9" height="18" rx="4.5" fill="#9a9a9a"/></svg>
+            Voxprint
+        </a>
         <div class="hero-copy">
             <h1>On-device speech transcription. No cloud, no account, no data ever leaves your device.</h1>
 <div class="demo">
