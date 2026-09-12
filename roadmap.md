@@ -1,3 +1,11 @@
+## Release check, 2026-09-11
+
+Handoff: paused at Joshua's request to conserve usage. Changes are local and uncommitted; no deployment or release. Confirmation remains pending. Completed checks and next steps: [revenue handoff](../REVENUE.md).
+
+ASC verified: macOS 1.3.9 READY_FOR_DISTRIBUTION; iOS 1.3.9 PENDING_DEVELOPER_RELEASE (version 36846827-7c37-45a0-875b-29ee1caf5029). Voxprint Pro is APPROVED at USD 1.00. The build/signing/submission work described below is done.
+
+Voxprint is already on the App Store and Product Hunt (Joshua). Next is releasing the approved iOS update, not another launch. Local purchase-feedback improvements need a later build: visible failures, pending-approval messaging, product-load retry, and restore results. See ../REVENUE.md.
+
 # Voxprint (formerly Echo Transcription) Roadmap
 
 ## READY TO SHIP: v1.3.9, real $1 paywall, needs a build from the signing Mac
@@ -176,3 +184,6 @@ with no git integration. Deploy explicitly:
 that is what made an earlier deploy fail with "Failed to automatically retrieve account IDs".
 Worth wiring the Pages project to build from this repo so a push is enough.
 - [ ] native (kmp) port — sibling apps have one, this doesn't (project-sync 2026-09-05)
+
+## From Notes (2026-09-12)
+- [ ] Landing demo: remove header from the demo, move it to actual landing page top-left (asked repeatedly)
