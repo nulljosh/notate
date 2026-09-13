@@ -4,27 +4,33 @@
 
 Speech to text that never leaves your device.
 
+Cloud transcription means every recording passes through someone else's
+server before it becomes text, which is a bad trade for anything personal.
 Voxprint transcribes on iPhone and Mac. No cloud, no network call. The audio stays
-where you recorded it.
+where you recorded it because on-device Whisper models are now good enough that
+the privacy cost of a server round-trip buys nothing in return.
 
 ## Transcription Pipeline
 
 `TranscriptionEngine` (Services/) is the core. It loads a WhisperKit model
 sized to the device's RAM, then batches live audio in 2-second windows and
 runs greedy decoding on each batch as it fills, so text appears within
-seconds of speaking rather than after the recording ends.
+seconds of speaking rather than after the recording ends, because a
+transcript that only shows up when you stop talking defeats the point of
+live dictation.
 
 - **Live buffer**: capped at 30s (Whisper's practical max window). Only the
   trailing ~8s is re-decoded per 2s tick, not the full rolling buffer, so
   decode time stays flat as a recording grows instead of increasing on every
-  tick.
+  tick, which is what a growing recording would otherwise do.
 - **Model persistence**: WhisperKit's default cache directory
   (HuggingFace Caches) is purgeable by iOS under storage pressure. After the
   first successful download, Voxprint copies the model into Application Support,
   which iOS does not purge, so subsequent launches load instantly instead of
-  re-downloading.
+  re-downloading a model that can run to hundreds of megabytes.
 - **Model selection**: chosen automatically at launch based on available
-  device memory, no user-facing model picker.
+  device memory, no user-facing model picker, because the right model is a
+  device fact, not a preference worth asking a user to reason about.
 
 ## Structure
 
