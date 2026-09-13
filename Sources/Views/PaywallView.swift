@@ -49,7 +49,7 @@ struct PaywallView: View {
             Button(action: { Task { await store.purchase() } }) {
                 Group {
                     if store.purchasing {
-                        ProgressView().tint(.white)
+                        ProgressView().tint(Self.invertedLabel)
                     } else {
                         Text(buyTitle).font(.system(size: 17, weight: .semibold))
                     }
@@ -61,10 +61,28 @@ struct PaywallView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 14))
             }
             .buttonStyle(.plain)
-            .disabled(store.purchasing || store.product == nil)
+            .disabled(store.purchasing || store.restoring || store.product == nil)
             .padding(.horizontal, 24)
 
-            Button("Restore Purchase") { Task { await store.restore() } }
+            if let message = store.message {
+                Text(message)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+            }
+
+            if store.product == nil {
+                Button(store.loadingProduct ? "Loading price…" : "Retry loading price") {
+                    Task { await store.loadProduct() }
+                }
+                .disabled(store.loadingProduct)
+                .padding(.top, 12)
+            }
+
+            Button(store.restoring ? "Restoring…" : "Restore Purchase") { Task { await store.restore() } }
+                .disabled(store.purchasing || store.restoring)
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
                 .padding(.top, 14)

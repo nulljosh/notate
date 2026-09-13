@@ -18,6 +18,9 @@ final class StoreManager: ObservableObject {
     @Published private(set) var isPro = false
     @Published private(set) var product: Product?
     @Published private(set) var purchasing = false
+    @Published private(set) var restoring = false
+    @Published private(set) var loadingProduct = false
+    @Published private(set) var message: String?
     @Published var showPaywall = false
 
     private var updatesTask: Task<Void, Never>?
@@ -28,8 +31,8 @@ final class StoreManager: ObservableObject {
         }
         updatesTask = listenForTransactions()
         Task {
-            await loadProduct()
             await refreshEntitlement()
+            await loadProduct()
         }
     }
 
@@ -58,6 +61,10 @@ final class StoreManager: ObservableObject {
     // MARK: - Purchase flow
 
     func loadProduct() async {
+        guard !loadingProduct else { return }
+        loadingProduct = true
+        message = nil
+        defer { loadingProduct = false }
         // ponytail: sandbox/App Review StoreKit fetches occasionally fail transiently;
         // retry a few times with backoff instead of leaving the button dead forever.
         for attempt in 0..<3 {
@@ -67,28 +74,49 @@ final class StoreManager: ObservableObject {
             }
             if attempt < 2 { try? await Task.sleep(for: .seconds(1 << attempt)) }
         }
+        message = "The App Store could not load the price. Check your connection and try again."
     }
 
     func purchase() async {
-        guard let product, !purchasing else { return }
+        guard let product, !purchasing, !restoring else { return }
         purchasing = true
+        message = nil
         defer { purchasing = false }
         do {
             let result = try await product.purchase()
-            if case .success(let verification) = result,
-               case .verified(let transaction) = verification {
+            switch result {
+            case .success(.verified(let transaction)):
                 await transaction.finish()
                 await refreshEntitlement()
-                showPaywall = false
+                if isPro { showPaywall = false }
+                else { message = "Your purchase is still being confirmed. Tap Restore Purchase to check again." }
+            case .success(.unverified):
+                message = "The App Store could not verify this purchase. Tap Restore Purchase to try again."
+            case .pending:
+                message = "Your purchase is awaiting approval. Pro will unlock when it is approved."
+            case .userCancelled:
+                break
+            @unknown default:
+                message = "The purchase could not be completed. Please try again."
             }
         } catch {
-            // Purchase failed or was cancelled; leave entitlement untouched.
+            message = "The purchase could not be completed. Please try again."
         }
     }
 
     func restore() async {
-        try? await AppStore.sync()
-        await refreshEntitlement()
+        guard !restoring, !purchasing else { return }
+        restoring = true
+        message = nil
+        defer { restoring = false }
+        do {
+            try await AppStore.sync()
+            await refreshEntitlement()
+            if isPro { showPaywall = false }
+            else { message = "No Voxprint Pro purchase was found for this Apple Account." }
+        } catch {
+            message = "Purchases could not be restored. Check your connection and try again."
+        }
     }
 
     // MARK: - Entitlement
