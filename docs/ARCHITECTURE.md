@@ -31,6 +31,24 @@ Voxprint is on-device speech transcription using WhisperKit. Record audio or dra
 | `web/assets/screenshot-*.png` | App screenshots (fastlane-generated) |
 | `project.yml` | XcodeGen: iOS/macOS targets, shared source tree, versions from MARKETING_VERSION/CURRENT_PROJECT_VERSION |
 | `PrivacyInfo.xcprivacy` | Privacy manifest (bundled in both targets) |
+| `watchos/` | watchOS companion app: shows transcription history and status from paired iPhone via App Group container |
+| `watchos/VoxprintWatchApp.swift` | watchOS app entry point with window group |
+| `watchos/ContentView.swift` | Main watchOS view: displays history, allows playback controls, syncs with iPhone |
+| `watchos/Models/` | Data models mirroring iOS transcription entries for shared App Group storage |
+| `watchos/Views/` | watchOS-specific UI components: history list, entry detail, playback controls |
+| `watchos/Assets.xcassets/` | watchOS app icon and assets |
+| `docs/index.html` | Redirects to app.html (kept for backward compatibility) |
+| `docs/app.html` | Landing page: responsive hero, features list, app store links, install instructions, inline navigation and settings |
+| `docs/styles.css` | Landing page styling: light/dark mode via prefers-color-scheme, responsive grid, device-frame screenshots |
+| `docs/script.js` | Landing page interactivity: theme toggle, settings modal, feature carousel, smooth scrolling |
+| `docs/devices.css` | Device frame styling for landing page demo screenshots (iPhone, Mac frames) |
+| `docs/privacy.html` | Privacy policy page: static content, linked from landing footer |
+| `UITests/PreviewScreenshot.swift` | Snapshot test suite: captures App Store screenshots in multiple locales and configurations |
+| `UITests/SnapshotHelper.swift` | Fastlane snapshot helper: integrates with Xcode testing framework to generate screenshots |
+| `UITests-mac/MacScreenshot.swift` | macOS App Store screenshot capture via UI automation |
+| `Tests/TranscriptionEntryTests.swift` | Unit tests for TranscriptionEntry model (Codable, persistence) |
+| `scripts/update_screenshots.sh` | Runs snapshot tests and stages generated screenshots for App Store upload |
+| `ci_scripts/ci_post_clone.sh` | Xcode Cloud setup script: installs/runs xcodegen before building to regenerate xcodeproj from project.yml |
 
 ## Storage
 
