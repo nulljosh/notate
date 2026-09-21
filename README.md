@@ -18,6 +18,8 @@ Live at [voxprint.heyitsmejosh.com](https://voxprint.heyitsmejosh.com) · [App S
   <img src="screenshots/appstore/5-live-recording.png" width="180">
 </p>
 
+<img src="progress.svg" width="460">
+
 ## Features
 
 - Record live. Text and waveform appear as you talk
