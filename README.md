@@ -2,7 +2,7 @@
 
 # Voxprint
 
-![Version](https://img.shields.io/badge/version-1.3.3-blue) ![Platform](https://img.shields.io/badge/platform-iOS%2017%20%7C%20macOS%2014-lightgrey) ![License](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fvoxprint-black?logo=github)](https://github.com/nulljosh/voxprint) [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-voxprint-da552f?logo=producthunt&logoColor=white)](https://www.producthunt.com/products/voxprint?launch=voxprint)
+![Version](https://img.shields.io/badge/version-1.4.0-blue) ![Platform](https://img.shields.io/badge/platform-iOS%2017%20%7C%20macOS%2014-lightgrey) ![License](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fvoxprint-black?logo=github)](https://github.com/nulljosh/voxprint) [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-voxprint-da552f?logo=producthunt&logoColor=white)](https://www.producthunt.com/products/voxprint?launch=voxprint)
 
 Speech to text that never leaves your device.
 
@@ -23,11 +23,12 @@ Live at [voxprint.heyitsmejosh.com](https://voxprint.heyitsmejosh.com) · [App S
 
 - Record live. Text and waveform appear as you talk
 - Transcribe a file. Drag it in on Mac, browse on iOS
-- 12 languages. Auto-detect, or pick one
+- Every language Whisper knows, about 99. Auto-detect, or pick one
 - Picks the right model for your device's RAM
 - History, the last 50
 - Export, share, copy
-- Retries if the model fails to load
+- Heals itself. A broken model download gets wiped and fetched again, no error wall
+- One dollar, once. No Pro tier, no in-app purchases, no subscription
 - Cmd+R on Mac
 - Light and dark
 - SwiftUI on iOS and macOS
@@ -58,23 +59,23 @@ xcodegen generate
 open VoxprintWatch.xcodeproj
 ```
 
-## This Week / This Month
+## Test
 
-**This week**
-- [ ] Build + upload new Mac build (icon source fixed 2026-06-30)
-- [ ] Fix macOS TestFlight upload "Invalid Bundle OS Type code" error
-- [ ] Fix macOS NavigationSplitView background seam bug
+```bash
+xcodebuild test -scheme VoxprintTests -destination "platform=macOS" CODE_SIGNING_ALLOWED=NO
+```
 
-**This month**
-- [ ] XCTest suite + snapshot tests
-- [ ] Apple Shortcut integration
+The real check is opt-in because it needs the network. It plants a corrupt model, makes the engine heal, then transcribes real speech:
+
+```bash
+TEST_RUNNER_VOXPRINT_QA=1 xcodebuild test -scheme VoxprintTests -destination "platform=macOS" CODE_SIGNING_ALLOWED=NO
+```
+
+`asc workflow run ship-ios` and `ship-mac` run it first. If it fails, nothing ships.
 
 ## Roadmap
 
-XCTest suite, snapshot tests, Apple Shortcut integration.
-
-- [ ] Fix macOS NavigationSplitView background seam, sidebar vibrancy material renders a visibly different shade than the detail pane despite both using `Color(.windowBackgroundColor)`. Needs a real styling pass (e.g. `.navigationSplitViewStyle` override or custom sidebar background), not a one-line value fix.
-- [ ] Mac TestFlight: `fastlane mac_beta` lane added 2026-06-21. Fixed missing `CFBundlePackageType` in `Sources/macOS/Info.plist` (confirmed `APPL` in the built archive), but `pilot` upload still fails with the same "Invalid Bundle OS Type code" error from `altool`, points to the export/.pkg step, not the source Info.plist. Needs further debugging before this can ship to TestFlight.
+Lives in [roadmap.md](roadmap.md). Next up: tiny model bundled in the app so first launch needs no download.
 
 ## License
 
