@@ -8,7 +8,6 @@ struct SettingsView: View {
     let languages: [String]
     let modelState: ModelState
     let resolvedModel: String
-    @ObservedObject var store: StoreManager
     let onReload: () async -> Void
     @Environment(\.dismiss) private var dismiss
     @AppStorage("app_theme") private var rawTheme = "system"
@@ -19,58 +18,6 @@ struct SettingsView: View {
                 Section("Appearance") {
                     AppearancePicker(rawTheme: $rawTheme)
                         .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
-                }
-
-                Section("Whisper Model") {
-                    ForEach(models, id: \.self) { model in
-                        Button {
-                            if store.isModelLocked(model) {
-                                store.showPaywall = true
-                            } else if selectedModel != model {
-                                selectedModel = model
-                                Task { await onReload() }
-                            }
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(modelLabel(model))
-                                        .foregroundStyle(.primary)
-                                    Text(modelDescription(model))
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-                                Spacer()
-                                if store.isModelLocked(model) {
-                                    Image(systemName: "lock.fill").font(.caption).foregroundStyle(.secondary)
-                                } else if selectedModel == model {
-                                    Image(systemName: "checkmark").foregroundStyle(.tint)
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Section("Voxprint Pro") {
-                    if store.isPro {
-                        Label("Unlocked", systemImage: "checkmark.seal.fill")
-                            .foregroundStyle(.primary)
-                    } else {
-                        Button {
-                            store.showPaywall = true
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("Unlock Voxprint Pro").foregroundStyle(.primary)
-                                    Text("\(store.freeFilesRemaining) free file transcriptions left")
-                                        .font(.caption).foregroundStyle(.secondary)
-                                }
-                                Spacer()
-                                Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
-                            }
-                        }
-                        Button("Restore Purchase") { Task { await store.restore() } }
-                            .foregroundStyle(.secondary)
-                    }
                 }
 
                 Section("Speak-Back Voice") {
@@ -93,6 +40,10 @@ struct SettingsView: View {
                     }
                 }
 
+                Section {
+                    NavigationLink("Advanced") { modelPicker }
+                }
+
                 Section("Status") {
                     HStack(spacing: 10) {
                         statusIndicator
@@ -109,17 +60,44 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            // Paywall must present from here while Settings is up: ContentView's
-            // sheet can't present while this sheet is already showing.
-            .sheet(isPresented: $store.showPaywall) {
-                PaywallView(store: store)
-            }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
                 }
             }
         }
+    }
+
+    // ponytail: Auto is right for nearly everyone, so the model list sits one level down
+    private var modelPicker: some View {
+        List {
+            Section {
+                ForEach(models, id: \.self) { model in
+                    Button {
+                        if selectedModel != model {
+                            selectedModel = model
+                            Task { await onReload() }
+                        }
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(modelLabel(model)).foregroundStyle(.primary)
+                                Text(modelDescription(model))
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            if selectedModel == model {
+                                Image(systemName: "checkmark").foregroundStyle(.tint)
+                            }
+                        }
+                    }
+                }
+            } footer: {
+                Text("Auto picks the best model for this device. Bigger models are more accurate and slower.")
+            }
+        }
+        .navigationTitle("Model")
     }
 
     @ViewBuilder
@@ -143,6 +121,7 @@ struct SettingsView: View {
 
     private func modelLabel(_ model: String) -> String {
         if model == "auto" { return "Auto" }
+        if model.contains("large") { return "Large" }
         return model.replacingOccurrences(of: "openai_whisper-", with: "").capitalized
     }
 

@@ -7,13 +7,7 @@ struct RecordButton: View {
 
     @State private var pulse = false
 
-    private var iconColor: Color {
-        #if os(iOS)
-        Color(.systemBackground)
-        #else
-        Color(.windowBackgroundColor)
-        #endif
-    }
+    private let iconColor = Color.white
 
     var body: some View {
         Button(action: action) {
@@ -35,7 +29,7 @@ struct RecordButton: View {
                 }
 
                 Circle()
-                    .fill(isRecording ? Color.red : Color.primary)
+                    .fill(isRecording ? Color.red : Color.accentColor)
                     .frame(width: 56, height: 56)
 
                 if isTranscribing && isRecording {

@@ -1,7 +1,7 @@
 import AVFoundation
 
 /// Speaks transcript text aloud on-device via AVSpeechSynthesizer. No network, no deps.
-/// ponytail: speak-back is free for all users — Pro gating decision deferred by Joshua, see roadmap.
+/// ponytail: speak-back is free for everyone.
 @MainActor
 final class SpeechManager: ObservableObject {
     static let voiceIdentifierKey = "echo.speechVoiceIdentifier"

@@ -1,9 +1,10 @@
 import SwiftUI
 
-private let whatsNewVersion = "1.3.6"
+private let whatsNewVersion = "1.4.0"
 private let whatsNewBullets = [
-    "Echo is now Voxprint — same on-device transcription, new name",
-    "Nothing leaves your device: transcription still runs entirely offline",
+    "Fixed a model error that stopped the app from loading",
+    "No more Pro. Everything is unlocked for everyone",
+    "Cleaner settings and a blue look that matches the icon",
 ]
 
 struct WhatsNewSheet: View {

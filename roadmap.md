@@ -1,10 +1,8 @@
-## Release check, 2026-09-11
+## State, 2026-09-21
 
-Handoff: paused at Joshua's request to conserve usage. Changes are local and uncommitted; no deployment or release. Confirmation remains pending. Completed checks and next steps: [revenue handoff](../REVENUE.md).
+1.3.9 is live on iOS and Mac. 1.4.0 is the fix build: model load no longer bricks on a half-copied model folder or after an app update, Pro is gone (app goes $0.99 upfront), the model picker moved under Settings, Advanced, and the buttons and splash are blue like the icon. Older notes below about the $1 IAP are history.
 
-ASC verified: macOS 1.3.9 READY_FOR_DISTRIBUTION; iOS 1.3.9 PENDING_DEVELOPER_RELEASE (version 36846827-7c37-45a0-875b-29ee1caf5029). Voxprint Pro is APPROVED at USD 1.00. The build/signing/submission work described below is done.
-
-Voxprint is already on the App Store and Product Hunt (Joshua). Next is releasing the approved iOS update, not another launch. Local purchase-feedback improvements need a later build: visible failures, pending-approval messaging, product-load retry, and restore results. See ../REVENUE.md.
+Open: a new name (Voxprint does not roll off the tongue), and the Willow gaps (system keyboard, AI cleanup of the transcript).
 
 # Voxprint (formerly Echo Transcription) Roadmap
 

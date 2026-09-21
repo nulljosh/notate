@@ -16,7 +16,7 @@ struct VoxprintApp: App {
 
 // MARK: - Share
 
-// ponytail: one overlay rather than a per-screen toolbar button — these root views share no
+// ponytail: one overlay rather than a per-screen toolbar button, these root views share no
 // navigation container to hang a .toolbar on. Move it into a toolbar per screen if this ever
 // covers something that matters.
 private struct AppShareOverlay: ViewModifier {

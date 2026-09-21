@@ -112,33 +112,51 @@ class TranscriptionEngine: ObservableObject {
         if case .loading = modelState { return }
         guard modelState != .ready else { return }
         modelState = .loading(progress: 0)
-        do {
-            let model = resolvedModel
-            if let folder = cachedFolder(for: model) {
-                whisperKit = try await WhisperKit(modelFolder: folder)
-            } else {
-                let downloadedFolder = try await downloadWithRetry(model)
-                // ponytail: copy to App Support so iOS cache purges don't force re-download
-                let stableFolder = Self.modelCacheURL.appendingPathComponent(model)
-                if !FileManager.default.fileExists(atPath: stableFolder.path) {
-                    try? FileManager.default.copyItem(at: downloadedFolder, to: stableFolder)
+        let model = resolvedModel
+        let fm = FileManager.default
+        let stableFolder = Self.modelCacheURL.appendingPathComponent(model)
+        var lastError: Error?
+        // Second pass runs only after a failed load wiped every local copy, so it starts clean.
+        for _ in 0..<2 {
+            var downloadedFolder: URL?
+            do {
+                if let folder = cachedFolder(for: model) {
+                    whisperKit = try await WhisperKit(modelFolder: folder)
+                } else {
+                    let downloaded = try await downloadWithRetry(model)
+                    downloadedFolder = downloaded
+                    // ponytail: copy to App Support so iOS cache purges don't force re-download.
+                    // Copy to a temp name then move, so a kill mid-copy never leaves a half model
+                    // at the stable path (that bricked every later launch).
+                    if !fm.fileExists(atPath: stableFolder.path) {
+                        let tmp = Self.modelCacheURL.appendingPathComponent(model + ".tmp")
+                        try? fm.removeItem(at: tmp)
+                        if (try? fm.copyItem(at: downloaded, to: tmp)) != nil {
+                            try? fm.moveItem(at: tmp, to: stableFolder)
+                        }
+                    }
+                    let finalPath = fm.fileExists(atPath: stableFolder.path) ? stableFolder.path : downloaded.path
+                    // ponytail: CoreML compile after download can take minutes, signal "preparing" so UI doesn't look stuck at 100%
+                    modelState = .loading(progress: 1)
+                    let kit = try await WhisperKit(modelFolder: finalPath)
+                    cacheFolder(finalPath, for: model)
+                    whisperKit = kit
                 }
-                let finalPath = FileManager.default.fileExists(atPath: stableFolder.path)
-                    ? stableFolder.path : downloadedFolder.path
-                // ponytail: CoreML compile after download can take minutes — signal "preparing" so UI doesn't look stuck at 100%
-                modelState = .loading(progress: 1)
-                let kit = try await WhisperKit(modelFolder: finalPath)
-                cacheFolder(finalPath, for: model)
-                whisperKit = kit
+                modelState = .ready
+                return
+            } catch {
+                // A corrupt or half-copied model fails forever unless every copy goes.
+                lastError = error
+                clearCachedFolder(for: model)
+                try? fm.removeItem(at: stableFolder)
+                if let downloadedFolder { try? fm.removeItem(at: downloadedFolder) }
+                modelState = .loading(progress: 0)
             }
-            modelState = .ready
-        } catch {
-            clearCachedFolder(for: resolvedModel)
-            modelState = .error(error.localizedDescription)
         }
+        modelState = .error(lastError?.localizedDescription ?? "Model failed to load")
     }
 
-    // ponytail: HF download has no timeout — watchdog cancels a stalled attempt, 3 tries total
+    // ponytail: HF download has no timeout, watchdog cancels a stalled attempt, 3 tries total
     private func downloadWithRetry(_ model: String) async throws -> URL {
         var lastError: Error?
         for _ in 1...3 {
@@ -323,7 +341,7 @@ class TranscriptionEngine: ObservableObject {
         )
     }
 
-    // Greedy options for live batches — much faster, good enough for preview
+    // Greedy options for live batches, much faster, good enough for preview
     private func liveDecodingOptions() -> DecodingOptions {
         DecodingOptions(
             language: selectedLanguage == "auto" ? nil : selectedLanguage,
@@ -338,6 +356,10 @@ class TranscriptionEngine: ObservableObject {
     // MARK: - Model folder cache
 
     private func cachedFolder(for model: String) -> String? {
+        // The stored absolute path dies on every app update (container UUID changes),
+        // so check the stable App Support copy by name first.
+        let stable = Self.modelCacheURL.appendingPathComponent(model).path
+        if FileManager.default.fileExists(atPath: stable) { return stable }
         guard let dict = UserDefaults.standard.dictionary(forKey: Self.modelFolderKey) as? [String: String],
               let folder = dict[model],
               FileManager.default.fileExists(atPath: folder) else { return nil }

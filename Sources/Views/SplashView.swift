@@ -14,7 +14,7 @@ struct SplashView: View {
             VStack(spacing: 12) {
                 Image(systemName: "waveform")
                     .font(.system(size: 56, weight: .light))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.tint)
                 Text("Voxprint")
                     .font(.system(size: 28, weight: .semibold))
                     .foregroundStyle(.primary)

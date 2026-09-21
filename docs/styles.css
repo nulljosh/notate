@@ -1,9 +1,9 @@
-/* Variables & Theme — portfolio vibe (heyitsmejosh.com/tokens.css) */
+/* Variables & Theme, portfolio vibe (heyitsmejosh.com/tokens.css) */
 @import url("https://heyitsmejosh.com/tokens.css");
 
 :root {
     --font: var(--font-body, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif);
-    /* ponytail: Voxprint's own blue instead of the portfolio yellow — the bright
+    /* ponytail: Voxprint's own blue instead of the portfolio yellow, the bright
        accent reads wrong here and fails contrast under white button text. */
     --primary: #2E6BE6;
     --primary-ink: #ffffff;
@@ -12,7 +12,7 @@
     --primary-dark: var(--navy);
     --text-primary: var(--text);
     --text-secondary: var(--text2);
-    --bg-secondary: var(--bg2);
+    --bg-secondary: #f5f5f7; /* neutral grey, the portfolio cream read as off-brand next to the blue */
     --success: #10b981;
     --error: #ef4444;
     --radius: var(--radius-lg);
@@ -24,6 +24,7 @@
     :root {
         --bg: #111111;
         --bg2: #1a1a1a;
+        --bg-secondary: #1a1a1a;
         --text: #e8e8f0;
         --text2: rgba(232,232,240,0.60);
         --border: rgba(232,232,240,0.10);
@@ -37,6 +38,7 @@
 html.dark-mode {
     --bg: #111111;
     --bg2: #1a1a1a;
+    --bg-secondary: #1a1a1a;
     --text: #e8e8f0;
     --text2: rgba(232,232,240,0.60);
     --border: rgba(232,232,240,0.10);
@@ -443,7 +445,6 @@ body {
     border-radius: var(--radius);
     cursor: pointer;
     transition: all 0.2s;
-    border-left: 3px solid var(--primary);
 }
 
 .history-item:hover {
@@ -710,7 +711,7 @@ body {
     display: none !important;
 }
 
-/* Landing page — matches the house landing style (see bookrank/index.html):
+/* Landing page, matches the house landing style (see bookrank/index.html):
    tinted hero band, 760px column, pill buttons, feature grid, closing CTA. */
 .container { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
 
@@ -723,7 +724,7 @@ body {
     text-align: center;
 }
 
-/* Animated hero wall — the same drifting card wall the other project landing
+/* Animated hero wall, the same drifting card wall the other project landing
    pages use. No canvas; CSS transforms only, and it stops dead under
    prefers-reduced-motion. */
 .hero-wall {
@@ -808,7 +809,7 @@ body {
 .btn-outline { border-color: var(--border); color: var(--text-primary); background: var(--bg); }
 .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
-/* visible keyboard focus — the default outline is lost against the wall */
+/* visible keyboard focus, the default outline is lost against the wall */
 a:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 3px;

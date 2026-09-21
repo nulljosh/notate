@@ -15,7 +15,6 @@ enum InputMode: String, CaseIterable {
 
 struct ContentView: View {
     @StateObject private var engine = TranscriptionEngine()
-    @StateObject private var store = StoreManager()
     @StateObject private var speech = SpeechManager()
     @State private var showHistory = false
     @State private var inputMode: InputMode = .record
@@ -46,42 +45,17 @@ struct ContentView: View {
                 languages: engine.availableLanguages,
                 modelState: engine.modelState,
                 resolvedModel: engine.resolvedModel,
-                store: store,
                 onReload: { await engine.reloadModel() }
             )
         }
-        .sheet(isPresented: $store.showPaywall) {
-            PaywallView(store: store)
-        }
         .onOpenURL { url in
             inputMode = .file
-            if store.canTranscribeFile() {
-                transcribe(url)
-            } else {
-                store.showPaywall = true
-            }
+            transcribe(url)
         }
     }
 
-    /// File transcription is the paid workflow. Allow it while free runs remain or Pro
-    /// is owned, otherwise surface the paywall instead of starting the picker.
-    private func requestFile() {
-        if store.canTranscribeFile() {
-            showFilePicker = true
-        } else {
-            store.showPaywall = true
-        }
-    }
-
-    /// Runs the transcription, then consumes a free run only if it actually produced text.
     private func transcribe(_ url: URL) {
-        Task {
-            await engine.transcribeFile(url: url)
-            let out = engine.transcribedText
-            if !out.isEmpty && !out.hasPrefix("Transcription failed") {
-                store.recordFileTranscription()
-            }
-        }
+        Task { await engine.transcribeFile(url: url) }
     }
 
     // MARK: - iOS
@@ -194,7 +168,7 @@ struct ContentView: View {
             if engine.isTranscribing {
                 VStack(spacing: 10) {
                     ProgressView(value: engine.fileProgress)
-                        .tint(.primary)
+                        .tint(.accentColor)
                         .frame(width: 160)
                     Text("Transcribing… \(Int(engine.fileProgress * 100))%")
                         .font(.system(size: 13))
@@ -213,7 +187,7 @@ struct ContentView: View {
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
-                    Button("Browse Files") { requestFile() }
+                    Button("Browse Files") { showFilePicker = true }
                         .buttonStyle(.borderedProminent)
                         .controlSize(.small)
                         .disabled(engine.modelState != .ready)
@@ -318,9 +292,9 @@ struct ContentView: View {
     }
 
     private var fileActionButton: some View {
-        Button { requestFile() } label: {
+        Button { showFilePicker = true } label: {
             ZStack {
-                Circle().fill(Color.primary).frame(width: 56, height: 56)
+                Circle().fill(Color.accentColor).frame(width: 56, height: 56)
                 if engine.isTranscribing {
                     ProgressView().tint(Color.white).scaleEffect(0.85)
                 } else {
@@ -342,7 +316,6 @@ struct ContentView: View {
 
     #if os(macOS)
     private func handleDrop(providers: [NSItemProvider]) -> Bool {
-        guard store.canTranscribeFile() else { store.showPaywall = true; return false }
         guard let provider = providers.first else { return false }
         provider.loadFileRepresentation(forTypeIdentifier: UTType.audio.identifier) { url, _ in
             guard let url else { return }

@@ -13,7 +13,6 @@ Live at [voxprint.heyitsmejosh.com](https://voxprint.heyitsmejosh.com) · [App S
 <p align="center">
   <img src="screenshots/appstore/1-finished-transcript.png" width="180">
   <img src="screenshots/appstore/2-history.png" width="180">
-  <img src="screenshots/appstore/3-paywall.png" width="180">
   <img src="screenshots/appstore/4-settings.png" width="180">
   <img src="screenshots/appstore/5-live-recording.png" width="180">
 </p>

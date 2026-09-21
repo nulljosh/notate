@@ -4,24 +4,24 @@ How Voxprint makes money. The fleet-wide ledger is `GTM.md` in the Code root.
 
 ## Price
 
-Free download. Three free file transcriptions, then Voxprint Pro, $0.99 once.
+$0.99 upfront. Everything unlocked. No in-app purchases, no trial counter.
 
 ## Rail
 
-StoreKit non-consumable `com.nulljosh.echo.unlock`. Code in `Sources/Services/StoreManager.swift` and `PaywallView.swift`.
+The App Store price. Nothing in the code. The old `com.nulljosh.echo.unlock` unlock and its paywall were removed in 1.4.0.
 
 ## Why
 
-Everything runs on the device, so there is no cost per user and no reason to rent it out. Own it once. Live mic stays free forever. The price is low on purpose: a no-review app needs reviews more than margin. Aiko, the closest rival, charges $19.99.
+Everything runs on the device, so there is no cost per user and no reason to rent it out. Own it once. A paywall inside a paid app is friction for a dollar. Aiko, the closest rival, charges $19.99.
 
 ## Next
 
-iOS 1.3.9 went live 2026-09-20, so the paywall is real on both platforms. Watch for the first sale. Raise the price toward $9.99 once reviews exist.
+Watch for the first sale. Raise the price toward $9.99 once reviews exist.
 
 ## Change it
 
-`asc iap pricing` for the unlock price. The free-file limit lives in StoreManager.
+`asc pricing schedule` for the app price.
 
-Anyone who got Voxprint while it was free keeps it free. Only new customers pay.
+Anyone who got Voxprint while it was free keeps it.
 
-*ASC 6782604262. Set 2026-09-20.*
+*ASC 6782604262. Set 2026-09-21.*
