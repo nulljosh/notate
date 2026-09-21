@@ -4,11 +4,31 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: macos-15
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - run: brew install xcodegen
       - run: xcodegen generate
       - run: xcodebuild test -scheme VoxprintTests -destination "platform=macOS" CODE_SIGNING_ALLOWED=NO
+
+  docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: README file references aren't stale
+        run: |
+          python3 - <<'PY'
+          import re, os, sys
+          refs = re.findall(r'(?:src="|\]\()([^")#?\s]+)', open("README.md").read())
+          bad = [r for r in refs if "://" not in r and not r.startswith(("mailto:", "/")) and not os.path.exists(r)]
+          print("stale README refs:", bad)
+          sys.exit(bool(bad))
+          PY
