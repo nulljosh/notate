@@ -1,15 +1,18 @@
 {
+  // Release automation. The qa step is a hard gate: a corrupt model must heal and real speech must transcribe, or nothing ships.
   // Release automation. Run: asc workflow run ship-ios VERSION:x.y.z
   "env": { "IOS_APP_ID": "6782604262", "MAC_APP_ID": "6782604262", "VERSION": "", "SUBMIT": "true" },
   "before_all": "asc auth status",
   "workflows": {
     "ship-ios": { "description": "Bump, archive, upload, submit iOS", "steps": [
+      { "name": "qa", "run": "cd . && xcodegen generate && TEST_RUNNER_VOXPRINT_QA=1 xcodebuild test -scheme VoxprintTests -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO -quiet" },
       { "name": "bump", "run": "cd . && asc xcode version edit --version \"$VERSION\" --build-number \"$(date +%Y%m%d%H%M)\"" },
       { "name": "archive", "run": "cd . && asc xcode archive --project voxprint.xcodeproj --scheme Voxprint-iOS --archive-path .asc/artifacts/voxprint.xcarchive --overwrite --output json" },
       { "name": "export", "run": "cd . && asc xcode export --archive-path .asc/artifacts/voxprint.xcarchive --export-options ExportOptions.plist --overwrite --ipa-path .asc/artifacts/voxprint.ipa --output json" },
       { "name": "publish", "if": "SUBMIT", "run": "asc review submit --app $IOS_APP_ID --version $VERSION --platform IOS --confirm --output json" }
     ] },
     "ship-mac": { "description": "Bump, archive, upload, submit Mac", "steps": [
+      { "name": "qa_mac", "run": "cd . && xcodegen generate && TEST_RUNNER_VOXPRINT_QA=1 xcodebuild test -scheme VoxprintTests -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO -quiet" },
       { "name": "bump_mac", "run": "cd . && asc xcode version edit --version \"$VERSION\" --build-number \"$(date +%Y%m%d%H%M)\"" },
       { "name": "archive_mac", "run": "cd . && asc xcode archive --project voxprint.xcodeproj --scheme Voxprint-macOS --archive-path .asc/artifacts/voxprint-mac.xcarchive --overwrite --output json" },
       { "name": "export_mac", "run": "cd . && asc xcode export --archive-path .asc/artifacts/voxprint-mac.xcarchive --export-options ExportOptions.plist --overwrite --ipa-path .asc/artifacts/voxprint-mac.ipa --output json" },
