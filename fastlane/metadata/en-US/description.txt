@@ -1,22 +1,18 @@
 Notate transcribes speech, music, and audio files entirely on your iPhone. No account, no cloud, no subscription. Your audio never leaves the device.
 
-Powered by an on-device Whisper model, Notate transcribes live from the microphone or from audio files you import—whether it's your voice, song lyrics, podcasts, or lectures. Everything runs locally, so it works on a plane, in a basement, anywhere, and nothing you say is ever uploaded.
+Powered by an on-device Whisper model, Notate transcribes live from the microphone or from audio files you import. Whether it's your voice, song lyrics, podcasts, or lectures, everything runs locally, so it works on a plane, in a basement, anywhere, and nothing you say is ever uploaded.
 
-FREE, FOREVER
+ONE PAYMENT, EVERYTHING INCLUDED
 - Unlimited live microphone transcription
-- Transcribe music and lyrics
-- Auto, Tiny, and Base models
-- Full history, copy, and share
-- 12 languages with auto-detect
-
-NOTATE PRO, ONE PAYMENT
 - Unlimited audio file transcription
-- The Small model, the most accurate
-- One purchase. Not a subscription, ever.
+- Every language Whisper knows with auto-detect
+- All models (Auto, Tiny, Base, Small, Turbo)
+- Full history, copy, and share
+- Speak back with system voice
 
 WHY NOTATE
 - On device. Your voice stays yours.
 - No account, no sign-up, no tracking.
-- No monthly fee. Own it once.
+- No subscription, no recurring charge.
 
 Notate is built for people who want their words, music, and audio transcribed without uploading to a server.

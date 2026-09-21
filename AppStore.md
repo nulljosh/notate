@@ -1,19 +1,14 @@
-# Notate — App Store Connect submission package
+# Notate - App Store Connect submission package
 
-Everything below is paste-ready. Account-side steps are the only thing blocking submission; all copy, the privacy URL, and the build are done.
+v1.4.0 is in review on iOS and Mac as of 2026-09-21. Price flips to $0.99 upfront after approval. No more Pro tier or in-app purchases.
 
-## Status (2026-05-30)
-- iOS Release: **BUILD SUCCEEDED** (signing aside, verified this session).
-- Device family set to iPhone-only (`TARGETED_DEVICE_FAMILY: "1"`) — iPhone screenshots only, no iPad QA.
-- Privacy policy live target: **https://notate.heyitsmejosh.com/privacy.html** (served from this repo's `docs/privacy.html` via GitHub Pages — verified 200).
-- Privacy manifest bundled, `ITSAppUsesNonExemptEncryption=false` set, StoreKit 2 local entitlement done.
-
-## The one blocker (only Joshua can do these)
-1. Enroll Apple Developer Program — $99 USD/yr. This gates every step below and every App Store dollar across all 38 apps. Highest-ROI $99 on the board.
-2. Create app record: bundle `com.nulljosh.echo` (iOS), team QMM486NPYC.
-3. Create IAP: non-consumable `com.nulljosh.echo.unlock`, $7.99 (Tier 8), reference name "Notate Pro". Attach one paywall screenshot (IAP is reviewed with the first version).
-4. App Privacy: select **Data Not Collected** (paste the privacy URL above).
-5. Run the macOS sandbox smoke test before submitting the Mac build (mic permission, WhisperKit model lands in sandbox container, file import works). Ship iOS first if the Mac sandbox test slips — do not let it block the iPhone submission.
+## Status (2026-09-21)
+- iOS and Mac: v1.4.0 **in review**.
+- Everything is now included for the one-time $0.99 purchase. No IAP, no paywall.
+- All languages Whisper knows (about 99) are now in the picker, with auto-detect.
+- Model is auto-picked by device; manual override in Settings > Advanced.
+- Privacy policy live target: **https://notate.heyitsmejosh.com/privacy.html**.
+- Privacy manifest bundled, `ITSAppUsesNonExemptEncryption=false` set.
 
 ---
 
@@ -28,7 +23,7 @@ Everything below is paste-ready. Account-side steps are the only thing blocking 
 **Category**: Primary Productivity, Secondary Utilities
 
 **Promotional Text** (170 char, editable without resubmit)
-`Transcribe voice and audio files entirely on your iPhone. No account, no cloud, no subscription. Buy it once and own it.`
+`Transcribe voice and audio files entirely on your iPhone. No account, no cloud, no subscription. One payment, own it forever.`
 
 **Keywords** (100 char max, comma-separated, no spaces)
 `transcribe,voice to text,whisper,dictation,audio to text,speech,recorder,offline,private,notes,memo`
@@ -37,31 +32,27 @@ Everything below is paste-ready. Account-side steps are the only thing blocking 
 ```
 Notate transcribes speech, music, and audio files entirely on your iPhone. No account, no cloud, no subscription. Your audio never leaves the device.
 
-Powered by an on-device Whisper model, Notate transcribes live from the microphone or from audio files you import—whether it's your voice, song lyrics, podcasts, or lectures. Everything runs locally, so it works on a plane, in a basement, anywhere, and nothing you say is ever uploaded.
+Powered by an on-device Whisper model, Notate transcribes live from the microphone or from audio files you import. Whether it's your voice, song lyrics, podcasts, or lectures, everything runs locally, so it works on a plane, in a basement, anywhere, and nothing you say is ever uploaded.
 
-FREE, FOREVER
+ONE PAYMENT, EVERYTHING INCLUDED
 - Unlimited live microphone transcription
-- Transcribe music and lyrics
-- Auto, Tiny, and Base models
-- Full history, copy, and share
-- 12 languages with auto-detect
-
-NOTATE PRO, ONE PAYMENT
 - Unlimited audio file transcription
-- The Small model, the most accurate
-- One purchase. Not a subscription, ever.
+- Every language Whisper knows with auto-detect
+- All models (Auto, Tiny, Base, Small, Turbo)
+- Full history, copy, and share
+- Speak back with system voice
 
 WHY NOTATE
 - On device. Your voice stays yours.
 - No account, no sign-up, no tracking.
-- No monthly fee. Own it once.
+- No subscription, no recurring charge.
 
 Notate is built for people who want their words, music, and audio transcribed without uploading to a server.
 ```
 
-**What's New** (first version)
+**What's New** (version 1.4.0)
 ```
-First release. On-device transcription for iPhone. Live mic and file import, 12 languages, full history, all running locally. Notate Pro unlocks unlimited file transcription and the most accurate model for one payment.
+Fixed a model error that could stop the app from loading. Everything is unlocked for everyone, no in-app purchases. Every language Whisper knows is now in the picker. Cleaner settings.
 ```
 
 **Support URL**: `https://heyitsmejosh.com`
@@ -74,10 +65,13 @@ First release. On-device transcription for iPhone. Live mic and file import, 12 
 ```
 Notate transcribes speech entirely on-device using a Whisper model (WhisperKit). No account or login is required and no data leaves the device, so there are no demo credentials needed.
 
-To test the in-app purchase:
-1. Live microphone transcription is free and unlimited. Tap record and speak.
-2. File transcription is free for the first 3 files, then prompts Notate Pro ($7.99, one-time non-consumable, com.nulljosh.echo.unlock).
-3. "Restore Purchase" is in the paywall and in Settings.
+All features are included with the app purchase. No in-app purchases, no paywalls, no paywall screenshots. Everything is unlocked.
+
+Test transcription:
+1. Live microphone transcription: tap record and speak, text appears as you talk.
+2. File import: drag or select an audio file, it transcribes the whole thing.
+3. Any of the 99+ languages Whisper supports, with auto-detect.
+4. Settings > Advanced lets you manually pick a model, but Auto is recommended.
 
 The first model download requires network once; after that the app is fully offline. Microphone permission is requested only when the user taps record.
 ```
@@ -86,11 +80,22 @@ The first model download requires network once; after that the app is fully offl
 1. Live transcription with the waveform animating
 2. A finished transcript with the share/copy bar
 3. History list
-4. The Notate Pro paywall (doubles as the IAP review screenshot)
-5. Settings showing model + language pickers
+4. Settings showing model + language pickers
+5. Optional: file import in progress
 
 ## Privacy nutrition label answers
 - Data used to track you: **None**
 - Data linked to you: **None**
 - Data not linked to you: **None**
 - Result: **Data Not Collected** (matches PrivacyInfo.xcprivacy and privacy.html)
+
+---
+
+## v1.4.0 shipping changes (2026-09-21)
+- All transcription features now included in the base $0.99 purchase.
+- Removed Notate Pro in-app purchase (`com.nulljosh.echo.unlock`).
+- Removed paywall UI entirely.
+- Expanded language picker to all 99+ languages Whisper supports.
+- Model selection moved to Settings > Advanced (Auto still default).
+- Simplified settings screen.
+- Fixed model loading bug that could prevent app launch.

@@ -7,7 +7,7 @@ I kept running into dictation apps that claimed to be private but still sent the
 
 Everything happens locally via WhisperKit and CoreML. No account, no analytics, nothing uploaded, ever. It works with no internet connection once the model is downloaded, which also means it works on a plane or anywhere else offline.
 
-Live mic transcription is free and unlimited. File transcription is free for the first three files, then $0.99 once, no subscription, no recurring charge to track.
+Everything is included in one $0.99 payment: live mic transcription, file transcription, all unlimited, no recurring charge to track.
 
 Genuinely curious if anyone here has audited on-device ML apps for privacy leaks I might have missed (telemetry, crash reporting, etc).
 

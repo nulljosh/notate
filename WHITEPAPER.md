@@ -1,6 +1,6 @@
 # Notate Technical Whitepaper
 
-**v1.3.7** | August 2026
+**v1.4.0** | September 2026
 
 Speech to text that never leaves your device.
 
@@ -29,8 +29,8 @@ live dictation.
   which iOS does not purge, so subsequent launches load instantly instead of
   re-downloading a model that can run to hundreds of megabytes.
 - **Model selection**: chosen automatically at launch based on available
-  device memory, no user-facing model picker, because the right model is a
-  device fact, not a preference worth asking a user to reason about.
+  device memory. A manual picker is available in Settings > Advanced for users
+  who want to trade speed for accuracy or accuracy for speed.
 
 ## Structure
 

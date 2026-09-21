@@ -1,5 +1,5 @@
 Notate is already on the App Store and Product Hunt (Joshua, 2026-09-11). Do not schedule a duplicate launch.
 
-Next: release the approved iOS 1.3.9 update. Mac 1.3.9 is already live. Purchase flow improvements (errors surfaced, concurrent taps guarded, button tint fixed) are committed locally (d87ccee, 2026-09-12) and ready to bundle into the next iOS release.
+Current status: 1.4.0 is in App Store review on iOS and Mac as of 2026-09-21. When approved, the store name changes to Notate and the price flips to $0.99 upfront. Version 1.4.1 will bundle store naming updates.
 
-After release: verify a free file import, a sandbox unlock, and restore. Measure purchases before planning follow-up promotion. Existing posts are historical drafts, not authorization to publish.
+After approval: verify mic transcription, file transcription, and settings navigation. All features are free, no in-app purchase to test.

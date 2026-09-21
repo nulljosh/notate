@@ -2,7 +2,7 @@
 
 Name: Notate
 One-liner: Speech to text that never leaves your device.
-Description: Notate runs WhisperKit locally on iPhone and Mac, so audio is transcribed on-device with no cloud call, no account, and nothing uploaded. It transcribes live from the mic in real time or from a dropped-in file, auto-detecting across 12 languages.
+Description: Notate runs WhisperKit locally on iPhone and Mac, so audio is transcribed on-device with no cloud call, no account, and nothing uploaded. It transcribes live from the mic in real time or from a dropped-in file, auto-detecting across every language Whisper supports.
 Category: Productivity / Privacy / Developer Tools
 Links: https://notate.heyitsmejosh.com · https://apps.apple.com/app/id6782604262 · https://github.com/nulljosh/notate
 
@@ -19,7 +19,7 @@ Skip. Notate is already public on the App Store and Product Hunt, BetaList is pr
 Use the one-liner and description above. Tag: Productivity, AI, Privacy.
 
 ## SaaSHub
-List under Productivity > Transcription. Note the pricing model in the listing field exactly: free download, three free file transcriptions, then Notate Pro at $0.99 once, not a subscription.
+List under Productivity > Transcription. Note the pricing model in the listing field exactly: one payment of $0.99, everything included, no subscription.
 
 ## dev.to
 Build-story angle, since the technical hook is real (on-device Whisper, not a wrapper around an API).
@@ -31,4 +31,4 @@ Draft outline:
 - The core mechanic: `TranscriptionEngine` batches live audio in 2-second windows and only re-decodes the trailing ~8s each tick, so decode time stays flat as a recording grows instead of climbing with it.
 - Model handling: WhisperKit's default cache directory is purgeable by iOS under storage pressure, so after the first download Notate copies the model into Application Support, which iOS won't purge, so later launches load instantly.
 - Model selection is automatic based on device RAM, no picker, because the right model is a device fact, not a preference.
-- Close with pricing: live dictation free and unlimited, file transcription free for three files then $0.99 once, and a link to the GitHub repo since the code is open.
+- Close with pricing: everything included for $0.99 once, no subscriptions, and a link to the GitHub repo since the code is open.
