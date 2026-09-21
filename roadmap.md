@@ -2,7 +2,15 @@
 
 1.3.9 is live on iOS and Mac. 1.4.0 is the fix build: model load no longer bricks on a half-copied model folder or after an app update, Pro is gone (app goes $0.99 upfront), the model picker moved under Settings, Advanced, and the buttons and splash are blue like the icon. Older notes below about the $1 IAP are history.
 
-Open: a new name (Voxprint does not roll off the tongue), and the Willow gaps (system keyboard, AI cleanup of the transcript).
+Open: a new name (Voxprint does not roll off the tongue).
+
+## Willow gaps (checked 2026-09-21, Willow is $19/month, cloud, 65 ratings)
+
+- [x] Languages: Willow says 100+. We showed 11 of Whisper's ~99. Full list shipped in 1.4.0.
+- [ ] Custom dictionary: names and acronyms. Whisper takes a prompt, so feed it a user word list. Small. Test that it does not blank the output.
+- [ ] AI cleanup: one tap to fix tone, grammar, length. Do it on device with Apple's Foundation Models so the privacy pitch holds.
+- [ ] Keyboard: dictate into any app. The big one. Keyboard extensions get very little memory, so the keyboard has to hand off to the main app to transcribe. Own project.
+- Skip: accounts, sync, SOC 2. We have no server. That is the pitch.
 
 # Voxprint (formerly Echo Transcription) Roadmap
 

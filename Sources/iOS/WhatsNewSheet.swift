@@ -4,6 +4,7 @@ private let whatsNewVersion = "1.4.0"
 private let whatsNewBullets = [
     "Fixed a model error that stopped the app from loading",
     "No more Pro. Everything is unlocked for everyone",
+    "Every language Whisper knows is now in the picker",
     "Cleaner settings and a blue look that matches the icon",
 ]
 

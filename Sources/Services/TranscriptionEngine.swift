@@ -35,7 +35,8 @@ class TranscriptionEngine: ObservableObject {
     @Published var isUnusualLanguage = false
 
     let availableModels = ["auto", "openai_whisper-tiny", "openai_whisper-base", "openai_whisper-small", "openai_whisper-large-v3-v20240930_turbo_632MB"]
-    let availableLanguages = ["auto", "en", "fr", "es", "de", "zh", "ja", "ko", "ar", "pt", "ru", "it"]
+    // Every language Whisper knows (the table has aliases, so dedupe by code)
+    let availableLanguages = ["auto"] + Set(Constants.languages.values).sorted()
     // ponytail: "unusual" = outside the languages the picker even offers
     private static let expectedLanguages = Set(["en", "fr", "es", "de", "zh", "ja", "ko", "ar", "pt", "ru", "it"])
 

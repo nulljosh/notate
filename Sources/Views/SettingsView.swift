@@ -24,18 +24,14 @@ struct SettingsView: View {
                     VoicePicker()
                 }
 
-                Section("Language") {
-                    ForEach(languages, id: \.self) { lang in
-                        Button {
-                            selectedLanguage = lang
-                        } label: {
-                            HStack {
-                                Text(languageLabel(lang)).foregroundStyle(.primary)
-                                Spacer()
-                                if selectedLanguage == lang {
-                                    Image(systemName: "checkmark").foregroundStyle(.tint)
-                                }
-                            }
+                Section {
+                    NavigationLink {
+                        languagePicker
+                    } label: {
+                        HStack {
+                            Text("Language")
+                            Spacer()
+                            Text(languageLabel(selectedLanguage)).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -66,6 +62,24 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    private var languagePicker: some View {
+        let sorted = languages.filter { $0 != "auto" }.sorted { languageLabel($0) < languageLabel($1) }
+        return List(["auto"] + sorted, id: \.self) { lang in
+            Button {
+                selectedLanguage = lang
+            } label: {
+                HStack {
+                    Text(languageLabel(lang)).foregroundStyle(.primary)
+                    Spacer()
+                    if selectedLanguage == lang {
+                        Image(systemName: "checkmark").foregroundStyle(.tint)
+                    }
+                }
+            }
+        }
+        .navigationTitle("Language")
     }
 
     // ponytail: Auto is right for nearly everyone, so the model list sits one level down
@@ -137,14 +151,9 @@ struct SettingsView: View {
         }
     }
 
-    private let languageNames: [String: String] = [
-        "auto": "Auto-detect", "en": "English", "fr": "French", "es": "Spanish",
-        "de": "German", "zh": "Chinese", "ja": "Japanese", "ko": "Korean",
-        "ar": "Arabic", "pt": "Portuguese", "ru": "Russian", "it": "Italian"
-    ]
-
     private func languageLabel(_ lang: String) -> String {
-        languageNames[lang] ?? lang.uppercased()
+        if lang == "auto" { return "Auto-detect" }
+        return Locale.current.localizedString(forLanguageCode: lang)?.capitalized ?? lang.uppercased()
     }
 }
 
