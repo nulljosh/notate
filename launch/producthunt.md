@@ -8,7 +8,7 @@ Description (219): Whisper transcription that runs entirely on your iPhone or Ma
 
 Topics: Productivity, Privacy, iOS
 
-Pricing: Free. Voxprint Pro is a one-time $1 purchase that unlocks unlimited audio file transcription and the most accurate model. Not a subscription.
+Pricing: Free download. Three free file transcriptions, then Voxprint Pro, $0.99 once. Not a subscription.
 
 Links
 Web: https://voxprint.heyitsmejosh.com
@@ -25,7 +25,7 @@ Voxprint runs WhisperKit locally on iPhone and Mac. Audio is decoded in two seco
 
 It handles more than voice. Drop in a podcast, a lecture, or a song and it writes out the words, with auto-detect across 12 languages.
 
-Live microphone transcription is free with no limits. The one paid thing is Voxprint Pro, a single one dollar purchase that unlocks unlimited audio file transcription and the Small model, the most accurate one. You buy it once. I'd rather sell a tool than rent one.
+Live microphone transcription is free with no limits. File transcription is free for the first three files, then Voxprint Pro unlocks the rest for $0.99, once. You buy it once. I'd rather sell a tool than rent one.
 
 The web app and the whole codebase are open. Happy to answer anything about the on-device pipeline.
 Post: https://www.producthunt.com/products/voxprint?launch=voxprint

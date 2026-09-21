@@ -1,0 +1,14 @@
+Note: no karma minimum posted, but check current standing. Some privacy subs are stricter about anything that looks like an ad, keep it story-first. Public launch.
+
+Title: Made a transcription app where the audio genuinely never leaves the device
+
+Body:
+I kept running into dictation apps that claimed to be private but still sent the audio to a server to actually transcribe it. That's not private, that's just a privacy policy. So I built Voxprint to run Whisper directly on iPhone and Mac, no network call at all.
+
+Everything happens locally via WhisperKit and CoreML. No account, no analytics, nothing uploaded, ever. It works with no internet connection once the model is downloaded, which also means it works on a plane or anywhere else offline.
+
+Live mic transcription is free and unlimited. File transcription is free for the first three files, then $0.99 once, no subscription, no recurring charge to track.
+
+Genuinely curious if anyone here has audited on-device ML apps for privacy leaks I might have missed (telemetry, crash reporting, etc).
+
+https://voxprint.heyitsmejosh.com
