@@ -1,4 +1,4 @@
-// Voxprint Web App - Main JavaScript
+// Notate Web App - Main JavaScript
 // Transcription, recording, file upload, and history management
 
 // Initialize Web Speech API

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Voxprint</string>
+	<string>Notate</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -24,7 +24,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.nulljosh.echo</string>
 	<key>CFBundleName</key>
-	<string>Voxprint</string>
+	<string>Notate</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -41,7 +41,7 @@
 		<true/>
 	</dict>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Voxprint transcribes speech locally on your device using Whisper AI. Your audio never leaves your device.</string>
+	<string>Notate transcribes speech locally on your device using Whisper AI. Your audio never leaves your device.</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

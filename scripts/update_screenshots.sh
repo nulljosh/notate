@@ -84,7 +84,7 @@ fi
 
 echo "==> Committing"
 git commit -m "$(cat <<'EOF'
-Update Voxprint App Store screenshots
+Update Notate App Store screenshots
 
 Regenerated via xcodebuild UI test using mock data (UITEST_RECORDING/FINISHED/
 HISTORY/PAYWALL launch arguments) -- no real audio/transcription required.

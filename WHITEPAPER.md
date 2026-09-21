@@ -1,4 +1,4 @@
-# Voxprint Technical Whitepaper
+# Notate Technical Whitepaper
 
 **v1.3.7** | August 2026
 
@@ -6,7 +6,7 @@ Speech to text that never leaves your device.
 
 Cloud transcription means every recording passes through someone else's
 server before it becomes text, which is a bad trade for anything personal.
-Voxprint transcribes on iPhone and Mac. No cloud, no network call. The audio stays
+Notate transcribes on iPhone and Mac. No cloud, no network call. The audio stays
 where you recorded it because on-device Whisper models are now good enough that
 the privacy cost of a server round-trip buys nothing in return.
 
@@ -25,7 +25,7 @@ live dictation.
   tick, which is what a growing recording would otherwise do.
 - **Model persistence**: WhisperKit's default cache directory
   (HuggingFace Caches) is purgeable by iOS under storage pressure. After the
-  first successful download, Voxprint copies the model into Application Support,
+  first successful download, Notate copies the model into Application Support,
   which iOS does not purge, so subsequent launches load instantly instead of
   re-downloading a model that can run to hundreds of megabytes.
 - **Model selection**: chosen automatically at launch based on available

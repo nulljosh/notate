@@ -1,6 +1,6 @@
-# Voxprint Money
+# Notate Money
 
-How Voxprint makes money. The fleet-wide ledger is `GTM.md` in the Code root.
+How Notate makes money. The fleet-wide ledger is `GTM.md` in the Code root.
 
 ## Price
 
@@ -22,6 +22,6 @@ Watch for the first sale. Raise the price toward $9.99 once reviews exist.
 
 `asc pricing schedule` for the app price.
 
-Anyone who got Voxprint while it was free keeps it.
+Anyone who got Notate while it was free keeps it.
 
 *ASC 6782604262. Set 2026-09-21.*

@@ -24,7 +24,7 @@ targets:
       INFOPLIST_FILE: ""
       GENERATE_INFOPLIST_FILE: YES
       INFOPLIST_KEY_WKWatchOnly: YES
-      INFOPLIST_KEY_NSMicrophoneUsageDescription: "Voxprint records audio locally on your watch. Your audio never leaves your device."
+      INFOPLIST_KEY_NSMicrophoneUsageDescription: "Notate records audio locally on your watch. Your audio never leaves your device."
       PRODUCT_BUNDLE_IDENTIFIER: com.nulljosh.echo.watchos
       ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-      PRODUCT_NAME: Voxprint
+      PRODUCT_NAME: Notate

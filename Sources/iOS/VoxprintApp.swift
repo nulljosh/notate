@@ -9,7 +9,7 @@ struct VoxprintApp: App {
             ContentView()
                 .preferredColorScheme(rawTheme == "dark" ? .dark : rawTheme == "light" ? .light : nil)
                 .overlay { WhatsNewSheet() }
-                .shareApp("https://voxprint.heyitsmejosh.com")
+                .shareApp("https://notate.heyitsmejosh.com")
         }
     }
 }

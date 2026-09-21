@@ -1,14 +1,14 @@
 <img src="icon.svg" width="80" style="border-radius:18px">
 
-# Voxprint
+# Notate
 
-![Version](https://img.shields.io/badge/version-1.4.0-blue) ![Platform](https://img.shields.io/badge/platform-iOS%2017%20%7C%20macOS%2014-lightgrey) ![License](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fvoxprint-black?logo=github)](https://github.com/nulljosh/voxprint) [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-voxprint-da552f?logo=producthunt&logoColor=white)](https://www.producthunt.com/products/voxprint?launch=voxprint)
+![Version](https://img.shields.io/badge/version-1.4.0-blue) ![Platform](https://img.shields.io/badge/platform-iOS%2017%20%7C%20macOS%2014-lightgrey) ![License](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fnotate-black?logo=github)](https://github.com/nulljosh/notate) [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-voxprint-da552f?logo=producthunt&logoColor=white)](https://www.producthunt.com/products/voxprint?launch=voxprint)
 
 Speech to text that never leaves your device.
 
 Native transcription on iPhone and Mac with [WhisperKit](https://github.com/argmaxinc/WhisperKit). No cloud. No API keys. Nothing uploaded, ever.
 
-Live at [voxprint.heyitsmejosh.com](https://voxprint.heyitsmejosh.com) · [App Store](https://apps.apple.com/app/id6782604262)
+Live at [notate.heyitsmejosh.com](https://notate.heyitsmejosh.com) · [App Store](https://apps.apple.com/app/id6782604262)
 
 <p align="center">
   <img src="screenshots/appstore/1-finished-transcript.png" width="180">

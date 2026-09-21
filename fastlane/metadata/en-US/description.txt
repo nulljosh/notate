@@ -1,6 +1,6 @@
-Voxprint transcribes speech, music, and audio files entirely on your iPhone. No account, no cloud, no subscription. Your audio never leaves the device.
+Notate transcribes speech, music, and audio files entirely on your iPhone. No account, no cloud, no subscription. Your audio never leaves the device.
 
-Powered by an on-device Whisper model, Voxprint transcribes live from the microphone or from audio files you import—whether it's your voice, song lyrics, podcasts, or lectures. Everything runs locally, so it works on a plane, in a basement, anywhere, and nothing you say is ever uploaded.
+Powered by an on-device Whisper model, Notate transcribes live from the microphone or from audio files you import—whether it's your voice, song lyrics, podcasts, or lectures. Everything runs locally, so it works on a plane, in a basement, anywhere, and nothing you say is ever uploaded.
 
 FREE, FOREVER
 - Unlimited live microphone transcription
@@ -9,14 +9,14 @@ FREE, FOREVER
 - Full history, copy, and share
 - 12 languages with auto-detect
 
-VOXPRINT PRO, ONE PAYMENT
+NOTATE PRO, ONE PAYMENT
 - Unlimited audio file transcription
 - The Small model, the most accurate
 - One purchase. Not a subscription, ever.
 
-WHY VOXPRINT
+WHY NOTATE
 - On device. Your voice stays yours.
 - No account, no sign-up, no tracking.
 - No monthly fee. Own it once.
 
-Voxprint is built for people who want their words, music, and audio transcribed without uploading to a server.
+Notate is built for people who want their words, music, and audio transcribed without uploading to a server.

@@ -8,9 +8,9 @@ Voxprint becomes **Notate**. Six letters, means "write it down", reads like Appl
 
 It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the binary, and a store name that does not match the app on the phone is a rejection risk on the build that fixes the brick. So the listing name and the display name change together:
 - [ ] `asc apps rename --app 6782604262 --app-info <pending id> --locale en-US --name "Notate"` when 1.4.1 is submitted. Re-probe first.
-- [ ] CFBundleDisplayName in both Info.plists, the in-app title, splash, What's New.
-- [ ] README, CLAUDE.md, WHITEPAPER, MONEY, landing, root Code/CLAUDE.md row.
-- [ ] Repo and subdomain (notate.heyitsmejosh.com) last, with a redirect from voxprint.
+- [x] CFBundleDisplayName in both Info.plists, the in-app title, splash. Done 2026-09-21, rides in the 1.4.1 build. What's New bullet still to add at ship.
+- [x] README, CLAUDE.md, WHITEPAPER, MONEY, landing, root Code/CLAUDE.md row. Done 2026-09-21.
+- [x] Repo (nulljosh/notate) and subdomain notate.heyitsmejosh.com. Done 2026-09-21. `metadata/app-info` name stays Voxprint until the listing rename, so a metadata push cannot rename the store early.
 - Bundle IDs, `echo.*` keys and the model folder stay frozen, same as the last rename.
 
 ## 1.4.1: no download wall (Joshua, 2026-09-21)
@@ -28,7 +28,7 @@ It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the b
 - [ ] Keyboard: dictate into any app. The big one. Keyboard extensions get very little memory, so the keyboard has to hand off to the main app to transcribe. Own project.
 - Skip: accounts, sync, SOC 2. We have no server. That is the pitch.
 
-# Voxprint (formerly Echo Transcription) Roadmap
+# Notate (formerly Voxprint, Echo Transcription) Roadmap
 
 ## READY TO SHIP: v1.3.9, real $1 paywall, needs a build from the signing Mac
 

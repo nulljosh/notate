@@ -1,6 +1,6 @@
 import Foundation
 
-/// A single on-watch voice memo. Voxprint's transcription runs entirely on
+/// A single on-watch voice memo. Notate's transcription runs entirely on
 /// the paired iPhone/Mac via WhisperKit; the watch app only captures and
 /// stores raw audio locally, nothing is transcribed or uploaded here.
 struct RecordingEntry: Identifiable, Codable {

@@ -9,7 +9,7 @@ struct VoxprintApp: App {
             ContentView()
                 .frame(minWidth: 800, minHeight: 560)
                 .preferredColorScheme(rawTheme == "dark" ? .dark : rawTheme == "light" ? .light : nil)
-                .shareApp("https://voxprint.heyitsmejosh.com")
+                .shareApp("https://notate.heyitsmejosh.com")
         }
         .windowStyle(.automatic)
         .commands {

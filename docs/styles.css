@@ -3,7 +3,7 @@
 
 :root {
     --font: var(--font-body, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif);
-    /* ponytail: Voxprint's own blue instead of the portfolio yellow, the bright
+    /* ponytail: Notate's own blue instead of the portfolio yellow, the bright
        accent reads wrong here and fails contrast under white button text. */
     --primary: #2E6BE6;
     --primary-ink: #ffffff;

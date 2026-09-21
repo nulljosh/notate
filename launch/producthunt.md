@@ -1,6 +1,6 @@
 # Product Hunt
 
-Name: Voxprint
+Name: Notate
 
 Tagline (52): Speech to text that never leaves your device
 
@@ -8,24 +8,24 @@ Description (219): Whisper transcription that runs entirely on your iPhone or Ma
 
 Topics: Productivity, Privacy, iOS
 
-Pricing: Free download. Three free file transcriptions, then Voxprint Pro, $0.99 once. Not a subscription.
+Pricing: Free download. Three free file transcriptions, then Notate Pro, $0.99 once. Not a subscription.
 
 Links
-Web: https://voxprint.heyitsmejosh.com
+Web: https://notate.heyitsmejosh.com
 App Store: https://apps.apple.com/app/id6782604262
-GitHub: https://github.com/nulljosh/voxprint
+GitHub: https://github.com/nulljosh/notate
 
 ## First comment
 
-Hi, I'm Josh, I built Voxprint.
+Hi, I'm Josh, I built Notate.
 
 I wanted dictation on my phone that I could trust with anything. Every app I tried sent the audio somewhere, asked for an account, or wanted eight dollars a month for what is really a model running on hardware I already own. So I put Whisper on the device itself.
 
-Voxprint runs WhisperKit locally on iPhone and Mac. Audio is decoded in two second windows as you speak, so words show up while you are still talking rather than after you stop. It picks a model that fits your device's memory, caches it somewhere iOS will not purge, and works on a plane or in a basement because there is no network call to make. Nothing you say is uploaded, ever. There is no sign-up and no tracking.
+Notate runs WhisperKit locally on iPhone and Mac. Audio is decoded in two second windows as you speak, so words show up while you are still talking rather than after you stop. It picks a model that fits your device's memory, caches it somewhere iOS will not purge, and works on a plane or in a basement because there is no network call to make. Nothing you say is uploaded, ever. There is no sign-up and no tracking.
 
 It handles more than voice. Drop in a podcast, a lecture, or a song and it writes out the words, with auto-detect across 12 languages.
 
-Live microphone transcription is free with no limits. File transcription is free for the first three files, then Voxprint Pro unlocks the rest for $0.99, once. You buy it once. I'd rather sell a tool than rent one.
+Live microphone transcription is free with no limits. File transcription is free for the first three files, then Notate Pro unlocks the rest for $0.99, once. You buy it once. I'd rather sell a tool than rent one.
 
 The web app and the whole codebase are open. Happy to answer anything about the on-device pipeline.
 Post: https://www.producthunt.com/products/voxprint?launch=voxprint

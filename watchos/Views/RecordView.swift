@@ -5,7 +5,7 @@ struct RecordView: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            Text("Voxprint")
+            Text("Notate")
                 .font(.headline)
                 .foregroundStyle(.secondary)
 
@@ -44,7 +44,7 @@ struct RecordView: View {
         }
         .padding(.horizontal, 4)
         .alert(
-            "Voxprint",
+            "Notate",
             isPresented: Binding(
                 get: { store.errorMessage != nil },
                 set: { if !$0 { store.errorMessage = nil } }

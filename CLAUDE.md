@@ -1,10 +1,10 @@
-# Voxprint (was Echo), CLAUDE.md
+# Notate (was Voxprint, was Echo), CLAUDE.md
 
 On-device Whisper transcription. iOS 17 + macOS 14, one unified ASC record (6782604262, Universal Purchase). WhisperKit via SPM. `roadmap.md` is the queue. `MONEY.md` is the price. `asc versions list --app 6782604262` is the truth on versions, never write them here.
 
 ## Frozen forever
 
-Renamed Echo → Voxprint 2026-07-29. These keep the old name on purpose. Renaming any of them orphans existing installs:
+Renamed Echo → Voxprint 2026-07-29, Voxprint → Notate 2026-09-21. The Notate store listing name applies with 1.4.1, when the binary says Notate too (re-probe with `asc apps rename` on the pending app info first). Xcode targets, schemes and the Pages project keep the name Voxprint, renaming them buys nothing. These keep the old name on purpose. Renaming any of them orphans existing installs:
 `com.nulljosh.echo*` bundle IDs, `echo.*` UserDefaults keys, the `echo-models` model folder, `echo-history.json`.
 
 ## Money
@@ -53,7 +53,7 @@ Ship gotchas, all seen for real:
 
 ## Landing
 
-`docs/` on Cloudflare Pages, project `voxprint`, domain voxprint.heyitsmejosh.com. A push deploys nothing:
+`docs/` on Cloudflare Pages, project `voxprint`, domain notate.heyitsmejosh.com (voxprint.heyitsmejosh.com still points here). A push deploys nothing:
 
 ```bash
 npx wrangler pages deploy docs/ --project-name=voxprint --branch=main
