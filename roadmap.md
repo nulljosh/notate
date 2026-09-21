@@ -2,7 +2,16 @@
 
 1.3.9 is live on iOS and Mac. 1.4.0 is the fix build: model load no longer bricks on a half-copied model folder or after an app update, Pro is gone (app goes $0.99 upfront), the model picker moved under Settings, Advanced, and the buttons and splash are blue like the icon. Older notes below about the $1 IAP are history.
 
-Open: a new name (Voxprint does not roll off the tongue).
+## Rename: Notate (decided 2026-09-21)
+
+Voxprint becomes **Notate**. Six letters, means "write it down", reads like Apple's Notes. Probed for real against ASC: AVAILABLE. 18 other plain words were taken.
+
+It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the binary, and a store name that does not match the app on the phone is a rejection risk on the build that fixes the brick. So the listing name and the display name change together:
+- [ ] `asc apps rename --app 6782604262 --app-info <pending id> --locale en-US --name "Notate"` when 1.4.1 is submitted. Re-probe first.
+- [ ] CFBundleDisplayName in both Info.plists, the in-app title, splash, What's New.
+- [ ] README, CLAUDE.md, WHITEPAPER, MONEY, landing, root Code/CLAUDE.md row.
+- [ ] Repo and subdomain (notate.heyitsmejosh.com) last, with a redirect from voxprint.
+- Bundle IDs, `echo.*` keys and the model folder stay frozen, same as the last rename.
 
 ## 1.4.1: no download wall (Joshua, 2026-09-21)
 
