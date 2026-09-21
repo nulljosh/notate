@@ -16,7 +16,7 @@ Everything runs on the device, so there is no cost per user and no reason to ren
 
 ## Next
 
-Release the approved iOS 1.3.9. Raise the price toward $9.99 once reviews exist.
+iOS 1.3.9 went live 2026-09-20, so the paywall is real on both platforms. Watch for the first sale. Raise the price toward $9.99 once reviews exist.
 
 ## Change it
 
