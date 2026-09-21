@@ -8,10 +8,6 @@ Voxprint becomes **Notate**. Six letters, means "write it down", reads like Appl
 
 It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the binary, and a store name that does not match the app on the phone is a rejection risk on the build that fixes the brick. So the listing name and the display name change together:
 - [ ] `asc apps rename --app 6782604262 --app-info <pending id> --locale en-US --name "Notate"` when 1.4.1 is submitted. Re-probe first.
-- [x] CFBundleDisplayName in both Info.plists, the in-app title, splash. Done 2026-09-21, rides in the 1.4.1 build. What's New bullet still to add at ship.
-- [x] README, CLAUDE.md, WHITEPAPER, MONEY, landing, root Code/CLAUDE.md row. Done 2026-09-21.
-- [x] Repo (nulljosh/notate) and subdomain notate.heyitsmejosh.com. Done 2026-09-21. `metadata/app-info` name stays Voxprint until the listing rename, so a metadata push cannot rename the store early.
-- Bundle IDs, `echo.*` keys and the model folder stay frozen, same as the last rename.
 
 ## 1.4.1: no download wall (Joshua, 2026-09-21)
 
@@ -22,7 +18,6 @@ It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the b
 
 ## Willow gaps (checked 2026-09-21, Willow is $19/month, cloud, 65 ratings)
 
-- [x] Languages: Willow says 100+. We showed 11 of Whisper's ~99. Full list shipped in 1.4.0.
 - [ ] Custom dictionary: names and acronyms. Whisper takes a prompt, so feed it a user word list. Small. Test that it does not blank the output.
 - [ ] AI cleanup: one tap to fix tone, grammar, length. Do it on device with Apple's Foundation Models so the privacy pitch holds.
 - [ ] Keyboard: dictate into any app. The big one. Keyboard extensions get very little memory, so the keyboard has to hand off to the main app to transcribe. Own project.
