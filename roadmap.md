@@ -204,3 +204,6 @@ Worth wiring the Pages project to build from this repo so a push is enough.
 
 ## From Notes (2026-09-12)
 - [ ] Landing demo: remove header from the demo, move it to actual landing page top-left (asked repeatedly)
+
+## Ingested 2026-10-02
+- [ ] Stale name: something still says Voxprint; it should say Notate (note said "now it's notify, I think"). Which surface?
