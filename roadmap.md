@@ -11,10 +11,10 @@ It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the b
 
 ## 1.4.1: no download wall (Joshua, 2026-09-21)
 
-- [ ] Bundle the tiny model in the app (fetched at build time, not checked into git). First launch works at once, offline.
-- [ ] Pull the best model for the device in the background. Swap between recordings, never mid-sentence. No blocking progress bar.
-- [ ] Tiny stays as the fallback. A corrupt big model drops back to tiny instead of an error screen.
-- [ ] Extend Tests/ModelRecoveryTests.swift to cover the fallback. The qa gate in .asc/workflow.json must stay green.
+- [x] Bundle the tiny model in the app (fetched at build time, not checked into git). First launch works at once, offline.
+- [x] Pull the best model for the device in the background. Swap between recordings, never mid-sentence. No blocking progress bar.
+- [x] Tiny stays as the fallback. A corrupt big model drops back to tiny instead of an error screen.
+- [x] Extend Tests/ModelRecoveryTests.swift to cover the fallback. The qa gate in .asc/workflow.json must stay green.
 
 ## Willow gaps (checked 2026-09-21, Willow is $19/month, cloud, 65 ratings)
 

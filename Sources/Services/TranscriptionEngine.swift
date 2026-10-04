@@ -27,6 +27,8 @@ class TranscriptionEngine: ObservableObject {
     @Published var isTranscribing = false
     @Published var audioLevel: Float = 0
     @Published var modelState: ModelState = .unloaded
+    /// Progress of the background download of a better model. nil when nothing is upgrading.
+    @Published var upgradeProgress: Double?
     @Published var fileProgress: Double = 0
     @Published var selectedModel = "auto"
     @Published var selectedLanguage = "auto"
@@ -41,6 +43,16 @@ class TranscriptionEngine: ObservableObject {
     private static let expectedLanguages = Set(["en", "fr", "es", "de", "zh", "ja", "ko", "ar", "pt", "ru", "it"])
 
     private var whisperKit: WhisperKit?
+    /// A better model that finished loading while a recording was running. Swapped in at the next idle moment.
+    private var pending: (kit: WhisperKit, model: String)?
+    private var upgradeTask: Task<Void, Never>?
+    private(set) var activeModel = ""
+    static let tinyModel = "openai_whisper-tiny"
+    /// The tiny model that ships inside the app, so the first launch works at once and offline.
+    static var bundledTiny: URL? {
+        let url = Bundle.main.resourceURL?.appendingPathComponent("BundledModels/\(tinyModel)")
+        return url.flatMap { FileManager.default.fileExists(atPath: $0.appendingPathComponent("AudioEncoder.mlmodelc").path) ? $0 : nil }
+    }
     private let capture = AudioCapture()
     private let bufferLock = NSLock()
     private var audioBuffer: [Float] = []
@@ -114,6 +126,63 @@ class TranscriptionEngine: ObservableObject {
         guard modelState != .ready else { return }
         modelState = .loading(progress: 0)
         let model = resolvedModel
+        if await loadFastPath(model) { return }
+        await blockingLoad(model)
+    }
+
+    /// Ready in seconds: a good cached copy of the chosen model, else the bundled tiny model while the
+    /// chosen one downloads in the background. Returns false only when there is no bundled model.
+    private func loadFastPath(_ model: String) async -> Bool {
+        if model != Self.tinyModel, let folder = cachedFolder(for: model) {
+            if let kit = try? await WhisperKit(modelFolder: folder) {
+                whisperKit = kit; activeModel = model; modelState = .ready
+                return true
+            }
+            // The cached copy is broken. Drop it and fall back to tiny, then fetch it again.
+            clearCachedFolder(for: model)
+            try? FileManager.default.removeItem(at: Self.modelCacheURL.appendingPathComponent(model))
+        }
+        guard let tiny = Self.bundledTiny, let kit = try? await WhisperKit(modelFolder: tiny.path) else { return false }
+        whisperKit = kit; activeModel = Self.tinyModel; modelState = .ready
+        if model != Self.tinyModel {
+            upgradeTask = Task { [weak self] in await self?.upgrade(to: model) }
+        }
+        return true
+    }
+
+    /// Downloads and loads the better model without touching the UI state, then swaps it in between recordings.
+    private func upgrade(to model: String) async {
+        upgradeProgress = 0
+        defer { upgradeProgress = nil }
+        let fm = FileManager.default
+        let stable = Self.modelCacheURL.appendingPathComponent(model)
+        do {
+            let downloaded = try await downloadWithRetry(model) { [weak self] f in self?.upgradeProgress = f }
+            if Task.isCancelled { return }
+            if !fm.fileExists(atPath: stable.path) {
+                let tmp = Self.modelCacheURL.appendingPathComponent(model + ".tmp")
+                try? fm.removeItem(at: tmp)
+                if (try? fm.copyItem(at: downloaded, to: tmp)) != nil { try? fm.moveItem(at: tmp, to: stable) }
+            }
+            let path = fm.fileExists(atPath: stable.path) ? stable.path : downloaded.path
+            let kit = try await WhisperKit(modelFolder: path)
+            cacheFolder(path, for: model)
+            pending = (kit, model)
+            applyPendingUpgrade()
+        } catch {
+            // Stay on tiny. A broken half download must not poison the next launch.
+            clearCachedFolder(for: model)
+            try? fm.removeItem(at: stable)
+        }
+    }
+
+    /// Swaps in the upgraded model, only when nothing is being recorded or transcribed.
+    func applyPendingUpgrade() {
+        guard !isRecording, !isTranscribing, let p = pending else { return }
+        whisperKit = p.kit; activeModel = p.model; pending = nil
+    }
+
+    private func blockingLoad(_ model: String) async {
         let fm = FileManager.default
         let stableFolder = Self.modelCacheURL.appendingPathComponent(model)
         var lastError: Error?
@@ -124,7 +193,7 @@ class TranscriptionEngine: ObservableObject {
                 if let folder = cachedFolder(for: model) {
                     whisperKit = try await WhisperKit(modelFolder: folder)
                 } else {
-                    let downloaded = try await downloadWithRetry(model)
+                    let downloaded = try await downloadWithRetry(model) { [weak self] f in self?.modelState = .loading(progress: f) }
                     downloadedFolder = downloaded
                     // ponytail: copy to App Support so iOS cache purges don't force re-download.
                     // Copy to a temp name then move, so a kill mid-copy never leaves a half model
@@ -158,7 +227,7 @@ class TranscriptionEngine: ObservableObject {
     }
 
     // ponytail: HF download has no timeout, watchdog cancels a stalled attempt, 3 tries total
-    private func downloadWithRetry(_ model: String) async throws -> URL {
+    private func downloadWithRetry(_ model: String, report: @escaping @MainActor (Double) -> Void) async throws -> URL {
         var lastError: Error?
         for _ in 1...3 {
             let lastProgress = Atomic()
@@ -169,9 +238,7 @@ class TranscriptionEngine: ObservableObject {
                     progressCallback: { [weak self] progress in
                         let fraction = progress.fractionCompleted
                         lastProgress.update(fraction)
-                        Task { @MainActor in
-                            self?.modelState = .loading(progress: fraction)
-                        }
+                        Task { @MainActor in report(fraction) }
                     }
                 )
             }
@@ -204,7 +271,12 @@ class TranscriptionEngine: ObservableObject {
         func update(_ fraction: Double) { lock.withLock { _date = Date() } }
     }
 
+    func cancelUpgrade() {
+        upgradeTask?.cancel(); upgradeTask = nil; pending = nil; upgradeProgress = nil
+    }
+
     func reloadModel() async {
+        cancelUpgrade()
         whisperKit = nil
         modelState = .unloaded
         await loadModel()
@@ -212,6 +284,7 @@ class TranscriptionEngine: ObservableObject {
 
     func startRecording() {
         guard modelState == .ready, !isRecording else { return }
+        applyPendingUpgrade()
         isRecording = true
         transcribedText = ""
         bufferLock.withLock { audioBuffer = [] }
@@ -254,6 +327,7 @@ class TranscriptionEngine: ObservableObject {
             addEntry(TranscriptionEntry(text: trimmed, duration: duration, model: selectedModel))
         }
         recordingStart = nil
+        applyPendingUpgrade()
     }
 
     func transcribeFile(url: URL) async {

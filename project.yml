@@ -12,6 +12,7 @@ settings:
     MARKETING_VERSION: "1.4.1"
     CURRENT_PROJECT_VERSION: "202610032040"
     DEVELOPMENT_TEAM: QMM486NPYC
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
 
 packages:
   WhisperKit:
@@ -26,6 +27,13 @@ targets:
       - path: Sources
         excludes:
           - "macOS/**"
+      - path: BundledModels
+        type: folder
+        optional: true
+    preBuildScripts:
+      - name: Fetch tiny model
+        script: "\"$SRCROOT/scripts/fetch-tiny-model.sh\""
+        basedOnDependencyAnalysis: false
     dependencies:
       - package: WhisperKit
         product: WhisperKit
@@ -45,6 +53,13 @@ targets:
       - path: Sources
         excludes:
           - "iOS/**"
+      - path: BundledModels
+        type: folder
+        optional: true
+    preBuildScripts:
+      - name: Fetch tiny model
+        script: "\"$SRCROOT/scripts/fetch-tiny-model.sh\""
+        basedOnDependencyAnalysis: false
     dependencies:
       - package: WhisperKit
         product: WhisperKit

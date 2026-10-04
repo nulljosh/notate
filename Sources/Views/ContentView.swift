@@ -255,7 +255,14 @@ struct ContentView: View {
             case .loading:
                 ProgressView().scaleEffect(0.7).frame(width: 20, height: 20)
             case .ready:
-                Circle().fill(Color.green).frame(width: 7, height: 7)
+                if let p = engine.upgradeProgress {
+                    // Working on tiny while a more accurate model downloads. Never blocks recording.
+                    ProgressView(value: p).progressViewStyle(.circular).scaleEffect(0.6).frame(width: 20, height: 20)
+                        .help("Getting a more accurate model in the background")
+                        .accessibilityLabel("Getting a more accurate model, \(Int(p * 100)) percent")
+                } else {
+                    Circle().fill(Color.green).frame(width: 7, height: 7)
+                }
             case .error:
                 Circle().fill(Color.orange).frame(width: 7, height: 7)
             case .unloaded:
@@ -264,6 +271,7 @@ struct ContentView: View {
         }
         .transition(.opacity.combined(with: .scale))
         .animation(.easeOut(duration: 0.2), value: engine.modelState)
+        .animation(.easeOut(duration: 0.2), value: engine.upgradeProgress == nil)
     }
 
     private var bottomBar: some View {
