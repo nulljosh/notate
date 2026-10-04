@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C7AD121A2379BFFDCDCF72 /* Cleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739827B542A84C837CAD7966 /* Cleanup.swift */; };
 		05CDE64D959FF0E4CD1DDE1A /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4EDF0EB36D3605787E476DEA /* WhisperKit */; };
 		07494958D71AE8F6F03C0A25 /* SpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332A910F82F4863EBB411432 /* SpeechManager.swift */; };
 		0D6C8F4E8C13ECE6EF48CF55 /* BundledModels in Resources */ = {isa = PBXBuildFile; fileRef = F31EAC7D6224E7BB2BDECB12 /* BundledModels */; };
@@ -36,6 +37,7 @@
 		A312DA1B4CA988406F65D34A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF9D1E91E59C9DCDB46932E /* ContentView.swift */; };
 		A78802055C5BA2E5BA185D3B /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7349640877D9FF7A297ECA96 /* HistoryView.swift */; };
 		ADF56B0B50FF05E8F6AA9318 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABCE0C09F8A34129F5803E83 /* Assets.xcassets */; };
+		B2F8167A5E60A287135C2F93 /* Cleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739827B542A84C837CAD7966 /* Cleanup.swift */; };
 		BB6FE98433FB4700C4FF754A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 93FCB8AABA751B85277EF677 /* PrivacyInfo.xcprivacy */; };
 		C8BB95B70EE72462C2E20A54 /* TranscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A25EFE8E023889ABCA07D05 /* TranscriptionView.swift */; };
 		D9D736EF1B27BCE2CB52A6FF /* WhatsNewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A99454A3A13FE624630412 /* WhatsNewSheet.swift */; };
@@ -90,6 +92,7 @@
 		6EB59A0168192E42A1F29EF0 /* PreviewScreenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewScreenshot.swift; sourceTree = "<group>"; };
 		72702A5CFAC0AD1F611CE747 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7349640877D9FF7A297ECA96 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		739827B542A84C837CAD7966 /* Cleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cleanup.swift; sourceTree = "<group>"; };
 		7422E6C055A2F0E0327F0A62 /* AudioCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCapture.swift; sourceTree = "<group>"; };
 		7B90C2CEA29D662F995B97EE /* Voxprint-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Voxprint-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D4FCA9CBB964EBCFF6DCFE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -188,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				7422E6C055A2F0E0327F0A62 /* AudioCapture.swift */,
+				739827B542A84C837CAD7966 /* Cleanup.swift */,
 				332A910F82F4863EBB411432 /* SpeechManager.swift */,
 				1824C0226572018B4E269CFF /* TranscriptionEngine.swift */,
 			);
@@ -482,6 +486,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA60DEA23CFE71C57BD2C234 /* AudioCapture.swift in Sources */,
+				B2F8167A5E60A287135C2F93 /* Cleanup.swift in Sources */,
 				A312DA1B4CA988406F65D34A /* ContentView.swift in Sources */,
 				495C4520E85CCDD392E7678A /* HistoryView.swift in Sources */,
 				781BBE69905286DE0C2A45D1 /* RecordButton.swift in Sources */,
@@ -501,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				663B5D509ACC116EFB7AB42D /* AudioCapture.swift in Sources */,
+				04C7AD121A2379BFFDCDCF72 /* Cleanup.swift in Sources */,
 				5147E8ED85517E1C2EB0E2EE /* ContentView.swift in Sources */,
 				A78802055C5BA2E5BA185D3B /* HistoryView.swift in Sources */,
 				7FA8CB74509004420F36EAE3 /* RecordButton.swift in Sources */,

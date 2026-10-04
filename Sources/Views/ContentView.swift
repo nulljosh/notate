@@ -290,6 +290,22 @@ struct ContentView: View {
                 fileActionButton
             }
 
+            if Cleanup.isAvailable {
+                Button { Task { await engine.cleanUp() } } label: {
+                    if engine.isCleaning {
+                        ProgressView().scaleEffect(0.8).frame(width: 22, height: 22)
+                    } else {
+                        Image(systemName: "wand.and.stars")
+                            .font(.system(size: 20))
+                            .foregroundStyle(engine.transcribedText.isEmpty ? AnyShapeStyle(.tertiary) : AnyShapeStyle(.secondary))
+                    }
+                }
+                .buttonStyle(.plain)
+                .disabled(engine.transcribedText.isEmpty || engine.isRecording || engine.isTranscribing || engine.isCleaning)
+                .help("Clean up punctuation, grammar and filler words, on device")
+                .accessibilityLabel("Clean up transcript")
+            }
+
             ShareLink(item: engine.transcribedText) {
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 20))

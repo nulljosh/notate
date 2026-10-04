@@ -19,7 +19,7 @@ It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the b
 ## Willow gaps (checked 2026-09-21, Willow is $19/month, cloud, 65 ratings)
 
 - [x] Custom dictionary: names and acronyms. Whisper takes a prompt, so feed it a user word list. Small. Test that it does not blank the output.
-- [ ] AI cleanup: one tap to fix tone, grammar, length. Do it on device with Apple's Foundation Models so the privacy pitch holds.
+- [x] AI cleanup: one tap to fix tone, grammar, length. Do it on device with Apple's Foundation Models so the privacy pitch holds.
 - [ ] Keyboard: dictate into any app. The big one. Keyboard extensions get very little memory, so the keyboard has to hand off to the main app to transcribe. Own project.
 - Skip: accounts, sync, SOC 2. We have no server. That is the pitch.
 

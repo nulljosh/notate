@@ -2,7 +2,7 @@ import Foundation
 
 struct TranscriptionEntry: Identifiable, Codable {
     let id: UUID
-    let text: String
+    var text: String
     let date: Date
     let duration: TimeInterval
     let model: String

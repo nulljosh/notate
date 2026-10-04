@@ -25,6 +25,7 @@ class TranscriptionEngine: ObservableObject {
     @Published var transcribedText = ""
     @Published var isRecording = false
     @Published var isTranscribing = false
+    @Published var isCleaning = false
     @Published var audioLevel: Float = 0
     @Published var modelState: ModelState = .unloaded
     /// Progress of the background download of a better model. nil when nothing is upgrading.
@@ -364,6 +365,20 @@ class TranscriptionEngine: ObservableObject {
             }
         } catch {
             transcribedText = "Transcription failed: \(error.localizedDescription)"
+        }
+    }
+
+    /// Tidies the current transcript on device and updates its history entry too.
+    func cleanUp() async {
+        let original = transcribedText
+        guard !original.isEmpty, !isCleaning, !isRecording, !isTranscribing else { return }
+        isCleaning = true
+        defer { isCleaning = false }
+        guard let cleaned = try? await Cleanup.clean(original), cleaned != original else { return }
+        transcribedText = cleaned
+        if let i = entries.firstIndex(where: { $0.text == original }) {
+            entries[i].text = cleaned  // same entry, same date
+            saveHistory()
         }
     }
 

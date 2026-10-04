@@ -88,4 +88,21 @@ final class ModelRecoveryTests: XCTestCase {
         XCTAssertTrue(engine.transcribedText.lowercased().contains("transcription"), "prompt must not blank the output, got: \(engine.transcribedText)")
         if let entry = engine.entries.first { engine.deleteEntry(entry) }
     }
+
+    /// Cleanup never loses words: without the system model it returns the text untouched.
+    func testCleanupKeepsTextWhenModelMissing() async throws {
+        try XCTSkipIf(Cleanup.isAvailable, "system model present; covered by the live check")
+        let text = "um so this is a test you know"
+        let out = try await Cleanup.clean(text)
+        XCTAssertEqual(out, text)
+    }
+
+    /// Live: on a Mac with Apple Intelligence, cleanup keeps the words and drops the filler.
+    func testCleanupLive() async throws {
+        try XCTSkipIf(ProcessInfo.processInfo.environment["VOXPRINT_QA"] == nil, "opt-in")
+        try XCTSkipUnless(Cleanup.isAvailable, "no system model on this machine")
+        let out = try await Cleanup.clean("um so this is uh a test of the cleanup you know")
+        XCTAssertTrue(out.lowercased().contains("test"), "lost the words: \(out)")
+        XCTAssertFalse(out.lowercased().contains(" uh "), "filler kept: \(out)")
+    }
 }
