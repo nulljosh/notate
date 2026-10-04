@@ -4,6 +4,7 @@ import AVFoundation
 struct SettingsView: View {
     @Binding var selectedModel: String
     @Binding var selectedLanguage: String
+    @Binding var customWords: String
     let models: [String]
     let languages: [String]
     let modelState: ModelState
@@ -34,6 +35,17 @@ struct SettingsView: View {
                             Text(languageLabel(selectedLanguage)).foregroundStyle(.secondary)
                         }
                     }
+                }
+
+                Section {
+                    TextField("Names, places, jargon", text: $customWords, axis: .vertical)
+                        .lineLimit(1...4)
+                        .autocorrectionDisabled()
+                        .accessibilityIdentifier("custom-words")
+                } header: {
+                    Text("Custom Words")
+                } footer: {
+                    Text("Notate spells these your way. Separate them with commas.")
                 }
 
                 Section {

@@ -32,6 +32,10 @@ class TranscriptionEngine: ObservableObject {
     @Published var fileProgress: Double = 0
     @Published var selectedModel = "auto"
     @Published var selectedLanguage = "auto"
+    /// Names and terms the person wants spelled their way, comma or line separated. Fed to Whisper as a prompt.
+    @Published var customWords: String = UserDefaults.standard.string(forKey: "notate.customWords") ?? "" {
+        didSet { UserDefaults.standard.set(customWords, forKey: "notate.customWords") }
+    }
     @Published var entries: [TranscriptionEntry] = []
     @Published var detectedLanguage: String?
     @Published var isUnusualLanguage = false
@@ -409,11 +413,30 @@ class TranscriptionEngine: ObservableObject {
 
     // Accurate options for final pass and file transcription
     private func decodingOptions() -> DecodingOptions {
-        DecodingOptions(
+        var options = DecodingOptions(
             language: selectedLanguage == "auto" ? nil : selectedLanguage,
             concurrentWorkerCount: 4,
             chunkingStrategy: .vad
         )
+        options.promptTokens = promptTokens()
+        return options
+    }
+
+    /// The custom words as Whisper prompt tokens, or nil when there are none.
+    private func promptTokens() -> [Int]? {
+        guard let text = Self.promptText(from: customWords), let tokenizer = whisperKit?.tokenizer else { return nil }
+        let tokens = tokenizer.encode(text: text).filter { $0 < tokenizer.specialTokens.specialTokenBegin }
+        return tokens.isEmpty ? nil : tokens
+    }
+
+    /// "Jos, LEC\nNotate" becomes " Jos, LEC, Notate." Trimmed, deduplicated, capped so it never crowds out speech.
+    static func promptText(from raw: String) -> String? {
+        var seen = Set<String>()
+        let words = raw.split(whereSeparator: { $0 == "," || $0 == "\n" })
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty && seen.insert($0.lowercased()).inserted }
+            .prefix(50)
+        return words.isEmpty ? nil : " " + words.joined(separator: ", ") + "."
     }
 
     // Greedy options for live batches, much faster, good enough for preview

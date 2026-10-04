@@ -41,6 +41,7 @@ struct ContentView: View {
             SettingsView(
                 selectedModel: $engine.selectedModel,
                 selectedLanguage: $engine.selectedLanguage,
+                customWords: $engine.customWords,
                 models: engine.availableModels,
                 languages: engine.availableLanguages,
                 modelState: engine.modelState,
