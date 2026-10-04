@@ -66,3 +66,7 @@ npx wrangler pages deploy docs/ --project-name=voxprint --branch=main
 - `PrivacyInfo.xcprivacy` in both targets, `ITSAppUsesNonExemptEncryption=false`
 - DEVELOPMENT_TEAM: QMM486NPYC
 - Icons: generate from `icon.svg`, never qlmanage
+
+## The loop
+
+App Store fix loop lives at docs/LOOP-HANDOFF.md. Phase 2 fleet audit starts after 22:00 usage reset.
