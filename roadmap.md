@@ -9,17 +9,8 @@ Voxprint becomes **Notate**. Six letters, means "write it down", reads like Appl
 It ships with 1.4.1, not before. 1.4.0 is in review with "Voxprint" inside the binary, and a store name that does not match the app on the phone is a rejection risk on the build that fixes the brick. So the listing name and the display name change together:
 - [ ] `asc apps rename --app 6782604262 --app-info <pending id> --locale en-US --name "Notate"` when 1.4.1 is submitted. Re-probe first.
 
-## 1.4.1: no download wall (Joshua, 2026-09-21)
-
-- [x] Bundle the tiny model in the app (fetched at build time, not checked into git). First launch works at once, offline.
-- [x] Pull the best model for the device in the background. Swap between recordings, never mid-sentence. No blocking progress bar.
-- [x] Tiny stays as the fallback. A corrupt big model drops back to tiny instead of an error screen.
-- [x] Extend Tests/ModelRecoveryTests.swift to cover the fallback. The qa gate in .asc/workflow.json must stay green.
-
 ## Willow gaps (checked 2026-09-21, Willow is $19/month, cloud, 65 ratings)
 
-- [x] Custom dictionary: names and acronyms. Whisper takes a prompt, so feed it a user word list. Small. Test that it does not blank the output.
-- [x] AI cleanup: one tap to fix tone, grammar, length. Do it on device with Apple's Foundation Models so the privacy pitch holds.
 - [ ] Keyboard: dictate into any app. The big one. Keyboard extensions get very little memory, so the keyboard has to hand off to the main app to transcribe. Own project.
 - Skip: accounts, sync, SOC 2. We have no server. That is the pitch.
 
