@@ -1,6 +1,6 @@
 # Notate Technical Whitepaper
 
-**v1.4.0** | September 2026
+**v1.4.2** | October 2026
 
 Speech to text that never leaves your device.
 
@@ -28,18 +28,30 @@ live dictation.
   first successful download, Notate copies the model into Application Support,
   which iOS does not purge, so subsequent launches load instantly instead of
   re-downloading a model that can run to hundreds of megabytes.
+- **No download wall**: the tiny model ships inside the app (fetched at build
+  time by `scripts/fetch-tiny-model.sh`, kept out of git), so the first launch
+  is ready in seconds and works offline. The model picked for the device then
+  downloads in the background and swaps in only between recordings, never
+  mid-sentence. A cached model that fails to load drops back to tiny instead of
+  showing an error, and its broken copy is deleted so it can be fetched again.
 - **Model selection**: chosen automatically at launch based on available
   device memory. A manual picker is available in Settings > Advanced for users
   who want to trade speed for accuracy or accuracy for speed.
+- **Custom words**: names and terms from Settings become Whisper prompt tokens,
+  deduplicated and capped at 50 so they guide spelling without crowding out speech.
+- **Cleanup**: one tap sends the transcript to Apple's on-device Foundation
+  Models to fix punctuation, grammar and filler words. It is only offered where
+  the system model exists, and the original is kept if the answer is empty or runs away.
 
 ## Structure
 
 ```
+BundledModels/ tiny Whisper model, fetched at build time, not in git
 Sources/
   iOS/        VoxprintApp.swift, Info.plist, Assets.xcassets
   macOS/      VoxprintApp.swift, Info.plist, entitlements, Assets.xcassets
   Models/     TranscriptionEntry (Codable: id, text, date, duration, model)
-  Services/   TranscriptionEngine, AudioCapture
+  Services/   TranscriptionEngine, AudioCapture, Cleanup, SpeechManager
   Views/      ContentView, RecordButton, TranscriptionView, WaveformBarsView,
               HistoryView, SettingsView, SplashView
 ```

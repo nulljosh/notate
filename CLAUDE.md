@@ -30,7 +30,9 @@ docs/           landing page + web demo (app.html)
 
 **Model loading, read before touching it.** WhisperKit downloads into a cache iOS can purge, so the engine copies the model to `Application Support/echo-models/<model>` (temp name, then move, so a kill mid-copy cannot leave half a model). `cachedFolder` checks that stable folder by name first, because the absolute path stored in UserDefaults dies on every app update. If a load throws, every local copy is wiped and it tries once more clean. 1.3.9 shipped without this and bricked phones.
 
-**SettingsView**: appearance, speak-back voice, language (own page, every Whisper language), status. The model picker is under Advanced on purpose. Users should not need it.
+Since 1.4.2 `loadModel` takes the fast path first: a good cached copy of the chosen model, else the tiny model bundled in `BundledModels/` (fetched by the `scripts/fetch-tiny-model.sh` pre-build step, gitignored, Release builds fail without it) while the chosen model downloads in the background (`upgrade(to:)`). The new kit waits in `pending` and only swaps in through `applyPendingUpgrade()` when nothing is recording or transcribing. The old blocking path (`blockingLoad`) only runs when there is no bundled model. Custom words (`customWords`, UserDefaults `notate.customWords`) become Whisper `promptTokens`. `Cleanup.swift` wraps Apple Foundation Models and is only shown where the system model is available.
+
+**SettingsView**: appearance, speak-back voice, language (own page, every Whisper language), custom words, status. The model picker is under Advanced on purpose. Users should not need it.
 
 Accent color is the asset catalog blue. Buttons and splash use `Color.accentColor`, not `Color.primary`. Icon is the white mic on #0074D9.
 
@@ -43,7 +45,7 @@ TEST_RUNNER_VOXPRINT_QA=1 xcodebuild test -scheme VoxprintTests -destination 'pl
 asc workflow run ship-ios VERSION:x.y.z     # then ship-mac
 ```
 
-The QA test plants a corrupt model, the engine must heal, then real `say` speech must transcribe. It is the first step of both ship workflows. Never remove it, never ship on "it builds".
+The QA tests plant a corrupt model (the engine must heal), break the chosen model (it must fall back to the bundled tiny one), check custom words never blank real `say` speech, transcribe real speech, and run on-device cleanup live when the Mac has Apple Intelligence. It is the first step of both ship workflows. Never remove it, never ship on "it builds".
 
 Ship gotchas, all seen for real:
 - The workflow's publish step fails on a new version: the build is still processing and the version record does not exist. Finish by hand: `asc versions create`, set whatsNew with `asc localizations update --id`, wait for the build to go VALID (`asc builds uploads list`), then `asc review submit --build-id`.
