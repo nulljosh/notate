@@ -1,11 +1,10 @@
 import SwiftUI
 
-private let whatsNewVersion = "1.4.0"
+private let whatsNewVersion = "1.4.2"
 private let whatsNewBullets = [
-    "Fixed a model error that stopped the app from loading",
-    "No more Pro. Everything is unlocked for everyone",
-    "Every language Whisper knows is now in the picker",
-    "Cleaner settings and a blue look that matches the icon",
+    "Talk the moment it opens, even offline. A sharper model downloads quietly in the background",
+    "Custom words: add names and jargon in Settings and Notate spells them your way",
+    "One-tap cleanup fixes punctuation and drops the ums, on device (needs Apple Intelligence)",
 ]
 
 struct WhatsNewSheet: View {
