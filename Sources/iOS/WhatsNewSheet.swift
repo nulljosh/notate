@@ -44,7 +44,10 @@ struct WhatsNewSheet: View {
                     }
                     .buttonStyle(.borderedProminent)
                 }
-                .padding(24)
+                // The detent is the content height, so the bottom padding has to clear the home indicator and the sheet's rounded corners too.
+                .padding(.horizontal, 28)
+                .padding(.top, 32)
+                .padding(.bottom, 44)
                 .background(GeometryReader { geo in
                     Color.clear.preference(key: SheetHeightKey.self, value: geo.size.height)
                 })
